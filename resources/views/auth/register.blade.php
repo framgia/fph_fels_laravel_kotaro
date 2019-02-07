@@ -46,7 +46,7 @@
 
                             <div class="col-md-6">
                                 <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}"
-                                    name="password_digest" required>
+                                    name="password" required>
 
                                 @if ($errors->has('password'))
                                 <span class="invalid-feedback" role="alert">
@@ -61,7 +61,7 @@
                                 Password') }}</label>
 
                             <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_digest_confirmation"
+                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation"
                                     required>
                             </div>
                         </div>
