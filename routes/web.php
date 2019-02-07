@@ -11,10 +11,20 @@
 |
 */
 
+Route::group(['middleware' => ['auth']], function () {
+    Route::get('/user/dashboard', function () {
+        return view('/user/dashboard');
+    });
+});
 Route::get('/', function () {
+    if (Auth::check()) {
+        header('Location: /user/dashboard');
+    }
+
     return view('welcome');
 });
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/user/dashboard', 'Controller@user_dashboard_view');
+Route::get('/logout', 'Auth\LoginController@logout');
