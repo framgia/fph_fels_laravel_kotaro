@@ -39,8 +39,6 @@ class Controller extends BaseController
         $user_activities = collect();
         $user_activities = $user_activities->concat($relationship_activities)->concat($lesson_activities)->sortByDesc('updated_at');
 
-        // dd($user_activities);
-
         return view('/user/dashboard', compact('user_name', 'learned_lesson_number', 'learned_words_number', 'user_avatar', 'user_activities'));
     }
 
@@ -61,6 +59,38 @@ class Controller extends BaseController
         $learned_words = $word_model->learned_words($learned_words_id);
 
         return view('/user/learnedwordslist', compact('user_name', 'user_avatar', 'learned_words_number', 'learned_words', 'learned_lesson_number'));
+    }
+
+    public function profile_view($id)
+    {
+        $user_data = User::where('id', $id)->first()->only(['name', 'avatar_url', 'id']);
+        $relationship_model = new Relationship();
+        $learnedlesson_model = new LearnedLesson();
+        $followed_number = $relationship_model->number_of_followed($id);
+        $follower_number = $relationship_model->number_of_follower($id);
+        $followed_activities = $relationship_model->user_activities();
+        $lesson_activities = $learnedlesson_model->user_activities();
+
+        $user_activities = collect();
+        $user_activities = $user_activities->concat($followed_activities)->concat($lesson_activities)->sortByDesc('updated_at');
+
+        return view('/user/profile', compact('user_data', 'followed_number', 'follower_number', 'user_activities'));
+    }
+
+    public function following_store($following_id)
+    {
+        $relationship_model = new Relationship();
+        $relationship_model->store($following_id);
+
+        return redirect('/user/profile/' . $following_id);
+    }
+
+    public function followed_destroy($followed_id)
+    {
+        $relationship_model = new Relationship();
+        $relationship_model->followed_destroy($followed_id);
+
+        return redirect('/user/profile/' . $followed_id);
     }
 }
 

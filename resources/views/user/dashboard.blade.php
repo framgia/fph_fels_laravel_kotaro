@@ -4,7 +4,7 @@
 
 <div class="container">
     <div class="row">
-    <div class="border col-lg-2">
+        <div class="border col-lg-2">
             <div>
                 <div class="border">
                     <img src="{{asset('storage/' . $user_avatar)}}" alt="" class="img-thumbnail">
@@ -33,7 +33,7 @@
         </div>
         <div class="border col-lg-8">
             <div>
-                <div class="border ">
+                <div class="border">
                     Activities<br>
                     ___________________________
                 </div>
@@ -49,7 +49,7 @@
                                 <?php echo $user_activity['message']; ?>
                             </div>
                             <div class="col-lg-3">
-                            {{$user_activity['updated_at']->diffForHumans()}}
+                            {{ $user_activity["updated_at"] -> diffForHumans() }}
                             </div>
                             @endforeach
                         </div>

@@ -14,9 +14,10 @@ class LearnedWord extends Model
         return $learned_words_number;
     }
 
-    public function learned_words_id($id)
+    public function learned_words_id()
     {
-        $learned_words_id = LearnedWord::where('user_id', $id)->get();
+        $user_id = Auth::id();
+        $learned_words_id = LearnedWord::where('user_id', $user_id)->get();
 
         return $learned_words_id;
     }
