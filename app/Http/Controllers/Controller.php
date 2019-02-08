@@ -39,7 +39,6 @@ class Controller extends BaseController
 
         $user_activities = collect();
         $user_activities = $user_activities->concat($relationship_activities)->concat($lesson_activities)->sortByDesc('updated_at');
-
         return view('/user/dashboard', compact('user_name', 'learned_lesson_number', 'learned_words_number', 'user_avatar', 'user_activities'));
     }
 
@@ -111,7 +110,50 @@ class Controller extends BaseController
 
     public function lesson_view($category_id)
     {
-        dd('Lesson' . $category_id . 'start!');
+        $learnedlesson_model = new LearnedLesson();
+        $progress_number = $learnedlesson_model->get_progress_number($category_id);
+
+        $word_model = new Word();
+        $number_of_lesson_words = $word_model->get_number_of_lesson_words($category_id);
+
+        $category_model = new Category();
+        $category_data = $category_model->category_data($category_id);
+
+        if ($progress_number >= $number_of_lesson_words) {
+            return redirect('user/categorieslist');
+        }
+
+        $lesson_word = $word_model->get_lesson_words($category_id, $progress_number);
+        $choices = [
+            $lesson_word->answer,
+            $lesson_word->wrong_answer_1,
+            $lesson_word->wrong_answer_2,
+            $lesson_word->wrong_answer_3
+        ];
+
+        shuffle($choices);
+
+        $number_of_lesson_words = $word_model->get_number_of_lesson_words($category_id);
+
+        return view('/user/lesson', compact('progress_number', 'category_data', 'lesson_word', 'number_of_lesson_words', 'choices'));
+    }
+
+    public function lesson_check($category_id)
+    {
+        $choiced = request('choiced');
+        $word_id = request('word_id');
+
+        $word_model = new Word();
+        $lesson_word = $word_model->get_word_by_id($word_id);
+        if ($lesson_word->answer == $choiced) {
+            $learnedword_model = new LearnedWord();
+            $learnedword_model->store($word_id);
+        }
+
+        $learnedlesson_model = new LearnedLesson();
+        $learnedlesson_model->increment_progress_number($category_id);
+
+        return redirect('/user/lesson/' . $category_id);
     }
 }
 

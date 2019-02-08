@@ -40,4 +40,9 @@ class Category extends Model
     {
         return $categories = Category::all();
     }
+
+    public function category_data($category_id)
+    {
+        return $category_data = Category::where('id', $category_id)->first();
+    }
 }

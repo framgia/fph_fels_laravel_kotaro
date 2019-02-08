@@ -24,4 +24,20 @@ class Word extends Model
 
         return $learned_words;
     }
+
+    public function get_lesson_words($category_id, $progress_number)
+    {
+        $lesson_words = Word::where('category_id', $category_id)->get();
+        return $lesson_word = $lesson_words[$progress_number];
+    }
+
+    public function get_number_of_lesson_words($category_id)
+    {
+        return $number_of_lesson_words = Word::where('category_id', $category_id)->get()->count();
+    }
+
+    public function get_word_by_id($word_id)
+    {
+        return $word = Word::where('id', $word_id)->first();
+    }
 }

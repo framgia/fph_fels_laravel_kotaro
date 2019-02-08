@@ -8,7 +8,6 @@
             <div>
                 <div class="border">
                     <img src="{{asset('storage/' . $user_avatar)}}" alt="" class="img-thumbnail">
-
                 </div>
                 <div class="border">
                     <table>
