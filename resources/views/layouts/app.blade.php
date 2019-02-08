@@ -7,13 +7,7 @@
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
     <title>{{ config('app.name', 'FELS') }}</title>
-    <<<<<<< HEAD=======<title>{{ config('app.name', 'E-learning') }}</title>
-        >>>>>>> 3105310... [FELS-TASK] Prepare Database (#7)
-        =======
-        >>>>>>> 04cccca... merged
-
         <!-- Scripts -->
         <script src="{{ asset('js/app.js') }}" defer></script>
 

@@ -22,10 +22,7 @@
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $errors->first('name') }}</strong>
                                 </span>
-                                <<<<<<< HEAD>>>>>>> 3105310... [FELS-TASK] Prepare Database (#7)
-                                    =======
-                                    >>>>>>> 04cccca... merged
-                                    @endif
+                                @endif
                             </div>
                         </div>
 
@@ -40,10 +37,7 @@
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $errors->first('email') }}</strong>
                                 </span>
-                                <<<<<<< HEAD>>>>>>> 3105310... [FELS-TASK] Prepare Database (#7)
-                                    =======
-                                    >>>>>>> 04cccca... merged
-                                    @endif
+                                @endif
                             </div>
                         </div>
 
