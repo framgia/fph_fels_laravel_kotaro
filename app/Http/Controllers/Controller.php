@@ -18,6 +18,11 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function user_dashboard_view()
     {
         $id = Auth::id();
@@ -39,6 +44,7 @@ class Controller extends BaseController
 
         $user_activities = collect();
         $user_activities = $user_activities->concat($relationship_activities)->concat($lesson_activities)->sortByDesc('updated_at');
+
         return view('/user/dashboard', compact('user_name', 'learned_lesson_number', 'learned_words_number', 'user_avatar', 'user_activities'));
     }
 
@@ -90,7 +96,7 @@ class Controller extends BaseController
         $relationship_model = new Relationship();
         $relationship_model->store($following_id);
 
-        return redirect('/user/profile/' . $following_id);
+        return redirect('/user/profile/'.$following_id);
     }
 
     public function followed_destroy($followed_id)
@@ -98,13 +104,14 @@ class Controller extends BaseController
         $relationship_model = new Relationship();
         $relationship_model->followed_destroy($followed_id);
 
-        return redirect('/user/profile/' . $followed_id);
+        return redirect('/user/profile/'.$followed_id);
     }
 
     public function categories_view()
     {
         $category_model = new Category();
         $categories = $category_model->index();
+
         return view('user/categorieslist', compact('categories'));
     }
 
@@ -120,7 +127,7 @@ class Controller extends BaseController
         $category_data = $category_model->category_data($category_id);
 
         if ($progress_number >= $number_of_lesson_words) {
-            return redirect('user/categorieslist');
+            return redirect('user/result/'.$category_id);
         }
 
         $lesson_word = $word_model->get_lesson_words($category_id, $progress_number);
@@ -128,7 +135,7 @@ class Controller extends BaseController
             $lesson_word->answer,
             $lesson_word->wrong_answer_1,
             $lesson_word->wrong_answer_2,
-            $lesson_word->wrong_answer_3
+            $lesson_word->wrong_answer_3,
         ];
 
         shuffle($choices);
@@ -153,7 +160,37 @@ class Controller extends BaseController
         $learnedlesson_model = new LearnedLesson();
         $learnedlesson_model->increment_progress_number($category_id);
 
-        return redirect('/user/lesson/' . $category_id);
+        return redirect('/user/lesson/'.$category_id);
+    }
+
+    public function result_view($category_id)
+    {
+        $word_model = new Word();
+        $learnedlesson_model = new LearnedLesson();
+
+        $max_number_of_lesson_words = $word_model->get_number_of_lesson_words($category_id);
+        $progress_number = $learnedlesson_model->get_progress_number($category_id);
+
+        if ($progress_number >= $max_number_of_lesson_words) {
+            $category_model = new Category();
+            $learnedword_model = new LearnedWord();
+            $learned_words = $learnedword_model->learned_words_id(Auth::id());
+            $learned_words_number = $learnedword_model->learned_words_number($category_id);
+            $category_words = $word_model->all_lesson_words($category_id);
+
+            foreach ($category_words as $category_word) {
+                foreach ($learned_words as $learned_word) {
+                    if ($category_word->id == $learned_word->word_id) {
+                        $category_word->mark = true;
+                    }
+                }
+            }
+            $category_data = $category_model->category_data($category_id);
+
+            return view('/user/result', compact('max_number_of_lesson_words', 'category_data', 'category_words', 'learned_words_number'));
+        }
+
+        return redirect('/user/categorieslist');
     }
 }
 

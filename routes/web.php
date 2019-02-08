@@ -30,4 +30,5 @@ Route::get('/user/learnedwordslist/{id}', 'Controller@user_learned_words_list_vi
 Route::get('/user/categorieslist', 'Controller@categories_view');
 Route::get('/user/lesson/{category_id}', 'Controller@lesson_view');
 Route::post('/user/lesson/{category_id}', 'Controller@lesson_check');
+Route::get('/user/result/{category_id}', 'Controller@result_view');
 Route::get('/logout', 'Auth\LoginController@logout');

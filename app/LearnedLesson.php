@@ -4,6 +4,8 @@ namespace App;
 
 use App\User;
 use App\Word;
+use App\Category;
+use App\Relationship;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
 
@@ -43,7 +45,7 @@ class LearnedLesson extends Model
                 $number_of_words = Word::where('category_id', $user_lesson->category)->get()->count();
                 $user_lesson_activities->push([
                     'avatar_url' => $user_followed_data->avatar_url,
-                    'message' => '<a href="/user/profile/' . $user_followed_data->id . '">' . $user_followed_data->name . '</a> learned ' . $user_followed_lesson->progress_number . ' words of ' . $number_of_words . ' in <a href="/user/category/' . $category_data->id . '">' . $category_data->title . '</a>.',
+                    'message' => '<a href="/user/profile/' . $user_followed_data->id . '">' . $user_followed_data->name . '</a> learned ' . $user_followed_lesson->progress_number . ' of ' . $number_of_words . ' words in <a href="/user/category/' . $category_data->id . '">' . $category_data->title . '</a>.',
                     'updated_at' => $user_followed_lesson->updated_at,
                 ]);
             }
@@ -56,7 +58,7 @@ class LearnedLesson extends Model
     {
         $user_data = User::where('id', $id)->first();
         if ($user_data->id == Auth::id()) {
-            $user_data->name = "You";
+            $user_data->name = 'You';
         }
         $user_lesson_all = LearnedLesson::where('user_id', $user_data->id)->get();
 
@@ -68,7 +70,7 @@ class LearnedLesson extends Model
             $lesson_data = Lesson::where('');
             $user_lesson_activities->push([
                 'avatar_url' => $user_data->avatar_url,
-                'message' => '<a href="/user/profile/' . $user_data->id . '">' . $user_data->name . '</a> learned ' . $user_lesson->progress_number . ' words of ' . $number_of_words . ' in <a href="/user/category/' . $category_data->id . '">' . $category_data->title . '</a>.',
+                'message' => '<a href="/user/profile/' . $user_data->id . '">' . $user_data->name . '</a> learned ' . $user_lesson->progress_number . ' of ' . $number_of_words . ' words in <a href="/user/category/' . $category_data->id . '">' . $category_data->title . '</a>.',
                 'updated_at' => $user_lesson->updated_at,
             ]);
         }
@@ -88,6 +90,7 @@ class LearnedLesson extends Model
         }
         $learned_lesson = LearnedLesson::where('category_id', $category_id)->where('user_id', Auth::id())->first();
         $progress_number = $learned_lesson->progress_number;
+
         return $progress_number;
     }
 
@@ -97,9 +100,9 @@ class LearnedLesson extends Model
         $word_model = new Word();
         $max_progress_number = $word_model->get_number_of_lesson_words($category_id);
         if ($learned_lesson->progress_number >= $max_progress_number) {
-            return redirect('user/categorieslist');
+            return redirect('user/result/' . $category_id);
         }
-        $learned_lesson->progress_number++;
+        ++$learned_lesson->progress_number;
         $learned_lesson->update();
     }
 }
