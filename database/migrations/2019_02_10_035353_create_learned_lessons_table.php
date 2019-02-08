@@ -4,18 +4,17 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAnswersTable extends Migration
+class CreateLearnedLessonsTable extends Migration
 {
     /**
      * Run the migrations.
      */
     public function up()
     {
-        Schema::create('answers', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('lesson_id')->unique();
-            $table->integer('word_id')->unsigned();
-            $table->integer('choice_id')->unsigned();
+        Schema::create('learned_lessons', function (Blueprint $table) {
+            $table->integer('user_id')->unsigned();
+            $table->integer('category')->unsigned();
+            $table->integer('progress_number')->default(0);
             $table->timestamps();
         });
     }
@@ -25,6 +24,6 @@ class CreateAnswersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('answers');
+        Schema::dropIfExists('learned_lessons');
     }
 }

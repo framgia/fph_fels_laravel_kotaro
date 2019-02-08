@@ -13,7 +13,10 @@ class CreateWordsTable extends Migration
     {
         Schema::create('words', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('content');
+            $table->string('answer');
+            $table->string('wrong_answer_1');
+            $table->string('wrong_answer_2');
+            $table->string('wrong_answer_3');
             $table->integer('category_id')->unsigned();
             $table->foreign('category_id')->references('id')->on('categories');
             $table->timestamps();
