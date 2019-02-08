@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\User;
-use App\LearnedLesson;
 use App\LearnedWord;
-use Illuminate\Support\Facades\Auth;
+use App\LearnedLesson;
+use App\User;
+use App\Relationship;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -27,6 +27,16 @@ class Controller extends BaseController
         $word_model = new LearnedWord();
         $learned_words_number = $word_model->learned_words_number();
 
-        return view('/user/dashboard', compact('user_name', 'learned_lesson_number', 'learned_words_number', 'user_avatar'));
+        $relationship_model = new Relationship();
+        $relationship_activities = $relationship_model->activities();
+
+        $lesson_model = new LearnedLesson();
+        $lesson_activities = $lesson_model->activities();
+
+        $user_activities = collect();
+        $user_activities = $user_activities->concat($relationship_activities)->concat($lesson_activities)->sortByDesc('updated_at');
+
+        return view('/user/dashboard', compact('user_name', 'learned_lesson_number', 'learned_words_number', 'user_avatar', 'user_activities'));
     }
 }
+

@@ -14,5 +14,4 @@ class LearnedWord extends Model
 
         return $learned_words_number;
     }
-
 }
