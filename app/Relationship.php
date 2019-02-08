@@ -62,11 +62,16 @@ class Relationship extends Model
     public function user_activities($id)
     {
         $user_data = User::where('id', $id)->first();
+        if ($user_data->id == Auth::id()) {
+            $user_data->name = "You";
+        }
         $user_followed_all = Relationship::where('user_id', $user_data->id)->get();
         if ($user_data->id == Auth::id()) {
             $user_data->name = "You";
         }
         $user_followed_activities = collect();
+
+
 
         foreach ($user_followed_all as $user_followed) {
             $user_followed_data = User::where('id', $user_followed->followed_id)->first();

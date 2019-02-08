@@ -27,4 +27,6 @@ Route::post('/user/profile/{following_id}/follow', 'Controller@following_store')
 Route::get('/user/profile/{followed_id}/unfollow', 'Controller@profile_view');
 Route::delete('/user/profile/{followed_id}/unfollow', 'Controller@followed_destroy');
 Route::get('/user/learnedwordslist/{id}', 'Controller@user_learned_words_list_view');
+Route::get('/user/categorieslist', 'Controller@categories_view');
+Route::get('/user/lesson/{category_id}', 'Controller@lesson_view');
 Route::get('/logout', 'Auth\LoginController@logout');

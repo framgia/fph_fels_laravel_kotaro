@@ -16,7 +16,7 @@
                         </tr>
                         <tr>
                             <td>
-                                <a href="#">Learned {{ $learned_words_number }} words</a>
+                            <a href="/user/learnedwordslist/{{$id}}">Learned {{$learned_words_number}} words</a>
                             </td>
                         </tr>
                         <tr>

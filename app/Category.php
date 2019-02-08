@@ -27,12 +27,17 @@ class Category extends Model
 
                 $user_activities = [
                     'user_avatar_url' => $user->avatar_url,
-                    'message' => $user->name.' followed '.$followed_user_name.'.',
+                    'message' => $user->name . ' followed ' . $followed_user_name . '.',
                     'updated_at' => $user_followed_history->updated_at,
                 ];
             }
         }
 
         return $user_activities;
+    }
+
+    public function index()
+    {
+        return $categories = Category::all();
     }
 }

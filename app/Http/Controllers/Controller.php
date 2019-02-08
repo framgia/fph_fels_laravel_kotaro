@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\LearnedWord;
 use App\LearnedLesson;
+use App\Category;
 use App\User;
 use App\Word;
 use App\Relationship;
@@ -58,7 +59,7 @@ class Controller extends BaseController
         $word_model = new Word();
         $learned_words = $word_model->learned_words($learned_words_id);
 
-        return view('/user/learnedwordslist', compact('user_name', 'user_avatar', 'learned_words_number', 'learned_words', 'learned_lesson_number'));
+        return view('/user/learnedwordslist', compact('user_name', 'user_avatar', 'learned_words_number', 'learned_words', 'learned_lesson_number', 'id'));
     }
 
     public function profile_view($id)
@@ -99,6 +100,18 @@ class Controller extends BaseController
         $relationship_model->followed_destroy($followed_id);
 
         return redirect('/user/profile/' . $followed_id);
+    }
+
+    public function categories_view()
+    {
+        $category_model = new Category();
+        $categories = $category_model->index();
+        return view('user/categorieslist', compact('categories'));
+    }
+
+    public function lesson_view($category_id)
+    {
+        dd('Lesson' . $category_id . 'start!');
     }
 }
 

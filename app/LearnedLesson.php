@@ -2,15 +2,15 @@
 
 namespace App;
 
+use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
 
 class LearnedLesson extends Model
 {
-    public function learned_lesson_number()
+    public function learned_lesson_number($id)
     {
-        $user_id = Auth::id();
-        $learned_lessons_number = LearnedLesson::where('user_id', $user_id)->get()->count();
+        $learned_lessons_number = LearnedLesson::where('user_id', $id)->get()->count();
 
         return $learned_lessons_number;
     }
@@ -27,7 +27,7 @@ class LearnedLesson extends Model
             $number_of_words = Word::where('category_id', $user_lesson->category_id)->get()->count();
             $user_lesson_activities->push([
                 'avatar_url' => $user_data->avatar_url,
-                'message' => '<a href="/user/profile/' . $user_data->id . '">You</a> learned ' . $user_lesson->progress_number . ' words of ' . $number_of_words . ' in <a href="/user/category/' . $category_data->id . '">' . $category_data->title . '</a>.',
+                'message' => '<a href="/user/profile/' . $user_data->id . '">You</a> learned ' . $user_lesson->progress_number . ' of ' . $number_of_words . ' words in <a href="/user/category/' . $category_data->id . '">' . $category_data->title . '</a>.',
                 'updated_at' => $user_lesson->updated_at,
             ]);
         }
@@ -51,20 +51,22 @@ class LearnedLesson extends Model
         return $user_lesson_activities;
     }
 
-    public function user_activities()
+    public function user_activities($id)
     {
-        $user_data = Auth::user();
+        $user_data = User::where('id', $id)->first();
+        if ($user_data->id == Auth::id()) {
+            $user_data->name = "You";
+        }
         $user_lesson_all = LearnedLesson::where('user_id', $user_data->id)->get();
 
         $user_lesson_activities = collect();
 
         foreach ($user_lesson_all as $user_lesson) {
-            $category_data = Category::where('id', $user_lesson->category)->first();
-            $number_of_words = Word::where('category_id', $user_lesson->category)->get()->count();
-            $lesson_data = Lesson::where('');
+            $category_data = Category::where('id', $user_lesson->category_id)->first();
+            $number_of_words = Word::where('category_id', $user_lesson->category_id)->get()->count();
             $user_lesson_activities->push([
                 'avatar_url' => $user_data->avatar_url,
-                'message' => '<a href="/user/profile/' . $user_data->id . '">You</a> learned ' . $user_lesson->progress_number . ' words of ' . $number_of_words . ' in <a href="/user/category/' . $category_data->id . '">' . $category_data->title . '</a>.',
+                'message' => '<a href="/user/profile/' . $user_data->id . '">' . $user_data->name . '</a> learned ' . $user_lesson->progress_number . ' words of ' . $number_of_words . ' in <a href="/user/category/' . $category_data->id . '">' . $category_data->title . '</a>.',
                 'updated_at' => $user_lesson->updated_at,
             ]);
         }
