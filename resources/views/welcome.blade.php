@@ -4,9 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <title>E-learning</title>
-
+    <title>FELS</title>
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet" type="text/css">
 
@@ -81,10 +79,9 @@
             @endauth
         </div>
         @endif
-
         <div class="content">
             <div class="title m-b-md">
-                Welcome to E-learning
+                FELS Project
             </div>
         </div>
     </div>
