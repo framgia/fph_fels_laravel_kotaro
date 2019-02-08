@@ -68,13 +68,21 @@ class Controller extends BaseController
         $learnedlesson_model = new LearnedLesson();
         $followed_number = $relationship_model->number_of_followed($id);
         $follower_number = $relationship_model->number_of_follower($id);
-        $followed_activities = $relationship_model->user_activities();
-        $lesson_activities = $learnedlesson_model->user_activities();
+        $followed_activities = $relationship_model->user_activities($id);
+        $lesson_activities = $learnedlesson_model->user_activities($id);
+
+        $followed_exists = $relationship_model->followed_exists($id);
+        if ($id == Auth::id()) {
+            $followed_exists = 2;
+        }
+
+        $learnedword_model = new LearnedWord();
+        $learned_words_number = $learnedword_model->learned_words_number($id);
 
         $user_activities = collect();
         $user_activities = $user_activities->concat($followed_activities)->concat($lesson_activities)->sortByDesc('updated_at');
 
-        return view('/user/profile', compact('user_data', 'followed_number', 'follower_number', 'user_activities'));
+        return view('/user/profile', compact('user_data', 'followed_number', 'follower_number', 'user_activities', 'followed_exists', 'learned_words_number'));
     }
 
     public function following_store($following_id)

@@ -16,24 +16,31 @@
                     <div class="row">
                         <div class="col-lg-6">
                             {{$followed_number}}<br>
-                            following<br>
+                            followed<br>
                         </div>
                         <div class="col-lg-6">
                             {{$follower_number}}<br>
-                            following<br>
+                            follower<br>
                         </div>
                     </div>
                 </div>
                 <div class="border">
+                    @if($followed_exists == 0)
                     <form action="{{$user_data['id']}}/follow" method="POST">
                         @csrf
                         <button class="btn" name="follow_id">follow</button>
                     </form>
+                    @elseif($followed_exists == 1)
                     <form action="{{$user_data['id']}}/unfollow" method="POST">
                         @csrf
                         @method('DELETE')
                         <button class="btn" type="submit">unfollow</button>
                     </form>
+                    @elseif($user_data['id'] == Auth::id())
+                    @endif
+                </div>
+                <div>
+                    <a href="/user/learnedwordslist/{{$user_data['id']}}">Learned {{$learned_words_number}} words</a>
                 </div>
             </div>
         </div>
