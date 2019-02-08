@@ -96,7 +96,7 @@ class Controller extends BaseController
         $relationship_model = new Relationship();
         $relationship_model->store($following_id);
 
-        return redirect('/user/profile/'.$following_id);
+        return redirect('/user/profile/' . $following_id);
     }
 
     public function followed_destroy($followed_id)
@@ -104,7 +104,7 @@ class Controller extends BaseController
         $relationship_model = new Relationship();
         $relationship_model->followed_destroy($followed_id);
 
-        return redirect('/user/profile/'.$followed_id);
+        return redirect('/user/profile/' . $followed_id);
     }
 
     public function categories_view()
@@ -127,7 +127,7 @@ class Controller extends BaseController
         $category_data = $category_model->category_data($category_id);
 
         if ($progress_number >= $number_of_lesson_words) {
-            return redirect('user/result/'.$category_id);
+            return redirect('user/result/' . $category_id);
         }
 
         $lesson_word = $word_model->get_lesson_words($category_id, $progress_number);
@@ -160,7 +160,7 @@ class Controller extends BaseController
         $learnedlesson_model = new LearnedLesson();
         $learnedlesson_model->increment_progress_number($category_id);
 
-        return redirect('/user/lesson/'.$category_id);
+        return redirect('/user/lesson/' . $category_id);
     }
 
     public function result_view($category_id)
@@ -175,7 +175,7 @@ class Controller extends BaseController
             $category_model = new Category();
             $learnedword_model = new LearnedWord();
             $learned_words = $learnedword_model->learned_words_id(Auth::id());
-            $learned_words_number = $learnedword_model->learned_words_number($category_id);
+            $learned_words_number = $learned_words->count();
             $category_words = $word_model->all_lesson_words($category_id);
 
             foreach ($category_words as $category_word) {

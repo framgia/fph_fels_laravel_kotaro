@@ -31,4 +31,12 @@ Route::get('/user/categorieslist', 'Controller@categories_view');
 Route::get('/user/lesson/{category_id}', 'Controller@lesson_view');
 Route::post('/user/lesson/{category_id}', 'Controller@lesson_check');
 Route::get('/user/result/{category_id}', 'Controller@result_view');
+
+
 Route::get('/logout', 'Auth\LoginController@logout');
+
+route::group(['middleware' => ['auth', 'can:admin']], function () {
+    Route::get('/admin/categories/{page_number}', 'AdminController@categories_view');
+});
+
+

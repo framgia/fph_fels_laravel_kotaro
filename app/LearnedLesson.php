@@ -41,8 +41,8 @@ class LearnedLesson extends Model
             $user_followed_lesson_all = LearnedLesson::where('user_id', $user_followed_data->id)->get();
 
             foreach ($user_followed_lesson_all as $user_followed_lesson) {
-                $category_data = Category::where('id', $user_followed_lesson->category)->first();
-                $number_of_words = Word::where('category_id', $user_lesson->category)->get()->count();
+                $category_data = Category::where('id', $user_followed_lesson->category_id)->first();
+                $number_of_words = Word::where('category_id', $user_followed_lesson->category_id)->get()->count();
                 $user_lesson_activities->push([
                     'avatar_url' => $user_followed_data->avatar_url,
                     'message' => '<a href="/user/profile/' . $user_followed_data->id . '">' . $user_followed_data->name . '</a> learned ' . $user_followed_lesson->progress_number . ' of ' . $number_of_words . ' words in <a href="/user/category/' . $category_data->id . '">' . $category_data->title . '</a>.',

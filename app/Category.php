@@ -27,7 +27,7 @@ class Category extends Model
 
                 $user_activities = [
                     'user_avatar_url' => $user->avatar_url,
-                    'message' => $user->name . ' followed ' . $followed_user_name . '.',
+                    'message' => $user->name.' followed '.$followed_user_name.'.',
                     'updated_at' => $user_followed_history->updated_at,
                 ];
             }
@@ -44,5 +44,10 @@ class Category extends Model
     public function category_data($category_id)
     {
         return $category_data = Category::where('id', $category_id)->first();
+    }
+
+    public function get_five_category_data($page_number)
+    {
+        return $five_categories_data = Category::latest()->offset(($page_number - 1) * 5)->limit(5)->get();
     }
 }

@@ -1,5 +1,5 @@
 @extends('layouts/layout')
-@section('pagetitle','Profile | FELS')
+@section('pagetitle','Result | FELS')
 @section('content')
 <div class="container">
     <div class="row">

@@ -34,7 +34,6 @@ class Relationship extends Model
 
             foreach ($other_user_followed_all as $other_user_followed) {
                 $other_user_followed_data = User::where('id', $other_user_followed->followed_id)->first();
-
                 if ($other_user_followed->followed_id == Auth::id()) {
                     $other_user_followed_data->name = "You";
                 }
