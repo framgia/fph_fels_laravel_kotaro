@@ -4,7 +4,7 @@
 
 <div class="container">
     <div class="row">
-        <div class="border col-lg-2">
+    <div class="border col-lg-2">
             <div>
                 <div class="border">
                     <img src="{{asset('storage/' . $user_avatar)}}" alt="" class="img-thumbnail">
@@ -17,7 +17,7 @@
                         </tr>
                         <tr>
                             <td>
-                                <a href="#">Learned {{ $learned_words_number }} words</a>
+                                <a href="/user/learnedwordslist/{{Auth::id()}}">Learned {{ $learned_words_number }} words</a>
                             </td>
                         </tr>
                         <tr>

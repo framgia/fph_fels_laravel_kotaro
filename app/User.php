@@ -27,18 +27,16 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    public function user_name()
+    public function user_name($id)
     {
-        $user = Auth::user()->first();
-        $user_name = $user->name;
+        $user_name = User::where('id', $id)->first()->name;
 
         return $user_name;
     }
 
-    public function user_avatar()
+    public function user_avatar($id)
     {
-        $user = Auth::user()->first();
-        $user_avatar = $user->avatar_url;
+        $user_avatar = User::where('id', $id)->first()->avatar_url;
 
         return $user_avatar;
     }

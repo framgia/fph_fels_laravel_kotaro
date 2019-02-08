@@ -9,10 +9,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class LearnedLesson extends Model
 {
-    public function learned_lesson_number()
+    public function learned_lesson_number($id)
     {
-        $user_id = Auth::id();
-        $learned_lessons_number = LearnedLesson::where('user_id', $user_id)->get()->count();
+        $learned_lessons_number = LearnedLesson::where('user_id', $id)->get()->count();
 
         return $learned_lessons_number;
     }
@@ -27,7 +26,6 @@ class LearnedLesson extends Model
         foreach ($user_lesson_all as $user_lesson) {
             $category_data = Category::where('id', $user_lesson->category_id)->first();
             $number_of_words = Word::where('category_id', $user_lesson->category_id)->get()->count();
-            $lesson_data = Lesson::where('');
             $user_lesson_activities->push([
                 'avatar_url' => $user_data->avatar_url,
                 'message' => '<a href="user/profile/' . $user_data->id . '">You</a> learned ' . $user_lesson->progress_number . ' of ' . $number_of_words . ' words in <a href="/user/category/' . $category_data->id . '">' . $category_data->title . '</a>.',
