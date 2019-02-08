@@ -33,6 +33,34 @@
             </span>
         </div>
     </nav>
+    <div class="container mt-lg-4">
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="border">
+                    <div>
+                        <div>
+                            <img src="{{asset('storage/'.auth()->user()->avatar_url)}}" alt="" class="img-fluid rounded">
+                        </div>
+                        <div class="">
+                            {{auth()->user()->name}}
+                        </div>
+                        <div>
+                            <a href="#">Learned {{$learnedWordsNumber}} words</a>
+                        </div>
+                        <div>
+                            <a href="#">Learned {{$learnedLessonsNumber}} lessons</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-1"></div>
+            <div class="col-lg-8">
+                @yield('content')
+            </div>
+
+        </div>
+
+    </div>
 </body>
 
 </html> 

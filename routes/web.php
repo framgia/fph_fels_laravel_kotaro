@@ -13,12 +13,17 @@ use App\Http\Controllers\UserController;
 |
 */
 
+Route::group(['middleware' => ['auth']], function () {
+    Route::get('/', function () {
+        return view('/user/dashboad');
+    });
+});
 Route::get('/', function () {
     return view('welcome');
 });
-
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-
 Route::get('/dashboard', 'UserController@dashboardView');
+
+Route::get('/logout', 'Auth\LoginController@logout');
