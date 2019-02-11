@@ -13,7 +13,9 @@ class CreateLearnedLessonsTable extends Migration
     {
         Schema::create('learned_lessons', function (Blueprint $table) {
             $table->integer('user_id')->unsigned();
-            $table->integer('category')->unsigned();
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->integer('category_id')->unsigned();
+            $table->foreign('category_id')->references('id')->on('categories');
             $table->integer('progress_number')->default(0);
             $table->timestamps();
         });
