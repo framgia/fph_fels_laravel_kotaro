@@ -12,9 +12,8 @@ class CreateRelationshipsTable extends Migration
     public function up()
     {
         Schema::create('relationships', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('follower_id')->unsigned();
-            $table->foreign('follower_id')->references('id')->on('users');
+            $table->integer('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('users');
             $table->integer('followed_id')->unsigned();
             $table->foreign('followed_id')->references('id')->on('users');
             $table->timestamps();

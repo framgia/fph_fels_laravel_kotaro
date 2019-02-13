@@ -15,8 +15,9 @@ class CreateUsersTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('email');
+            $table->string('avatar_url')->nullable();
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('password_digest');
+            $table->string('password');
             $table->boolean('admin')->default(false);
             $table->rememberToken();
             $table->timestamps();
