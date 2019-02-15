@@ -34,7 +34,7 @@
             </ul>
         </div>
     </nav>
-    @yield('contain','none')
+    @yield('content','none')
 </body>
 
 </html>

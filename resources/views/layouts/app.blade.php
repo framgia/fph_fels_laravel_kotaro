@@ -9,7 +9,6 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', 'FELS') }}</title>
-    <title>{{ config('app.name', 'E-learning') }}</title>
 
 
     <!-- Scripts -->
