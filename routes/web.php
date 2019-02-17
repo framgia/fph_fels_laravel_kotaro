@@ -37,6 +37,8 @@ Route::get('/logout', 'Auth\LoginController@logout');
 
 route::group(['middleware' => ['auth', 'can:admin']], function () {
     Route::get('/admin/categories/{page_number}', 'AdminController@categories_view');
+    Route::get('/admin/category/edit/{category_id}', 'AdminController@category_edit_view');
+    Route::patch('/admin/category/restore/{category_id}', 'AdminController@category_edit_store');
 });
 
 
