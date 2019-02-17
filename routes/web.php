@@ -39,6 +39,9 @@ route::group(['middleware' => ['auth', 'can:admin']], function () {
     Route::get('/admin/categories/{page_number}', 'AdminController@categories_view');
     Route::get('/admin/category/edit/{category_id}', 'AdminController@category_edit_view');
     Route::patch('/admin/category/restore/{category_id}', 'AdminController@category_edit_store');
+    Route::get('/admin/category/delete_view/{category_id}', 'AdminController@category_delete_view');
+    Route::get('/admin/category/delete/{category_id}', 'AdminController@categories_view');
+    Route::delete('/admin/category/delete/{category_id}', 'AdminController@category_delete');
 });
 
 

@@ -45,4 +45,20 @@ class AdminController extends BaseController
         }
         return redirect('/admin/categories/1');
     }
+
+    public function category_delete_view($category_id)
+    {
+        $category_model = new Category();
+        $category_data = $category_model->category_data($category_id);
+
+        return view('/admin/category_delete', compact('category_data'));
+    }
+
+    public function category_delete($category_id)
+    {
+        $category_model = new Category();
+        $category_data = $category_model->category_data($category_id);
+        $category_data->delete();
+        return redirect('/admin/categories/1');
+    }
 }

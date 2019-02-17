@@ -9,14 +9,20 @@
 {{$category_data->description}}
 @endsection
 
+@section('readonly', 'readonly')
+
 @section('category_id')
 {{$category_data->id}}
 @endsection
 
-@section('method','restore')
+@section('method','delete')
+
+@section('required','')
 
 @section('method_add')
-@method('PATCH')
+@method('DELETE')
 @endsection
 
-@section('button_text','Edit')
+@section('button_text','DELETE')
+
+@section('button_color','danger')

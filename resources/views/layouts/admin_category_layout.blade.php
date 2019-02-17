@@ -11,14 +11,14 @@
                         @yield('method_add','')
                             <div class="form-group">
                                 <label for="exampleInputTitle">Title</label>
-                                <input class="form-control" type="text" name="title" value="@yield('title','')" placeholder="title" required>
+                                <input class="form-control" type="text" name="title" value="@yield('title','')" placeholder="title" @yield('required','required') @yield('readonly','')>
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputDescription">Description</label>
-                                <textarea class="form-control" name="description" cols="30" rows="10" placeholder="description" required>@yield('description','')</textarea>
+                                <textarea class="form-control" name="description" cols="30" rows="10" placeholder="description" @yield('required','required') @yield('readonly','')>@yield('description','')</textarea>
                             </div>
                             <div>
-                                <button class="btn btn-primary" type="submit">Edit</button>
+                                <button class="btn btn-@yield('button_color','primary')" type="submit">@yield('button_text','Post')</button>
                             </div>
                         </form>
                     </div>

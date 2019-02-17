@@ -21,7 +21,7 @@
                     <td>{{$five_category_data->title}}</td>
                     <td>{{$five_category_data->description}}</td>
                     <td>
-                        <a href="">Add word</a> | <a href="/admin/category/edit/{{$five_category_data->id}}">Edit</a> | <a href="">Delete</a>
+                        <a href="">Add word</a> | <a href="/admin/category/edit/{{$five_category_data->id}}">Edit</a> | <a href="/admin/category/delete_view/{{$five_category_data->id}}">Delete</a>
                     </td>
                 </tr>
                 @endforeach
