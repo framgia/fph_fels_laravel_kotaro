@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Word;
 use App\Category;
 use Illuminate\HTTP\Request;
 use Illuminate\Routing\Controller as BaseController;
@@ -59,6 +60,28 @@ class AdminController extends BaseController
         $category_model = new Category();
         $category_data = $category_model->category_data($category_id);
         $category_data->delete();
+        return redirect('/admin/categories/1');
+    }
+
+    public function category_add_word_view($category_id)
+    {
+        return view('/admin/category_add_word', compact('category_id'));
+    }
+
+    public function category_add_word_store($category_id, Request $request)
+    {
+        $category_model = new Category();
+        if (!$category_model->category_exists($category_id)) {
+        } else {
+            $request->validate([
+                'word' => 'required', 'answer' => 'required',
+                'choice1' => 'required', 'choice2' => 'required',
+                'choice3' => 'required', 'choice4' => 'required',
+            ]);
+            $word_model = new Word();
+            $word_model->store($category_id, $request);
+        }
+
         return redirect('/admin/categories/1');
     }
 }

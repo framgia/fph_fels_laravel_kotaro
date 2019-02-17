@@ -48,4 +48,24 @@ class Word extends Model
     {
         return $word = Word::where('id', $word_id)->first();
     }
+
+    public function store($category_id, $request)
+    {
+        $new_word = new Word();
+        $new_word->word = $request->word;
+        $new_word->category_id = $request->category_id;
+
+        $p = 1;
+        for ($i = 1; $i < 5; $i++) {
+            $choicei = "choice" . $i;
+            $wrong_answer_p = "wrong_answer_" . $p;
+            if ($request->answer == "choice$i") {
+                $new_word->answer = $request->$choicei;
+            } else {
+                $new_word->$wrong_answer_p = $request->$choicei;
+                $p++;
+            }
+        }
+        $new_word->save();
+    }
 }

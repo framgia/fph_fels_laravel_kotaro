@@ -42,6 +42,8 @@ route::group(['middleware' => ['auth', 'can:admin']], function () {
     Route::get('/admin/category/delete_view/{category_id}', 'AdminController@category_delete_view');
     Route::get('/admin/category/delete/{category_id}', 'AdminController@categories_view');
     Route::delete('/admin/category/delete/{category_id}', 'AdminController@category_delete');
+    Route::get('/admin/category/add_word/{category_id}', 'AdminController@category_add_word_view');
+    Route::post('/admin/category/add_word/store/{category_id}', 'AdminController@category_add_word_store');
 });
 
 

@@ -55,5 +55,4 @@ class Category extends Model
     {
         return $category_exists = Category::where('id', $category_id)->exists();
     }
-
 }
