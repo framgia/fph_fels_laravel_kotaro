@@ -101,6 +101,11 @@ class AdminController extends BaseController
 
     public function category_restore_word($word_id, Request $request)
     {
+        $request->validate([
+            'word' => 'required', 'answer' => 'required',
+            'choice1' => 'required', 'choice2' => 'required',
+            'choice3' => 'required', 'choice4' => 'required',
+        ]);
         $word_model = new Word();
         $category_id = $word_model->restore($word_id, $request);
         return redirect('/admin/category/view_word/' . $category_id . '/1');
