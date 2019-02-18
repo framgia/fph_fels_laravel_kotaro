@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Word;
+use App\User;
 use App\Category;
 use Illuminate\HTTP\Request;
 use Illuminate\Routing\Controller as BaseController;
@@ -125,5 +126,25 @@ class AdminController extends BaseController
         $word->delete();
 
         return redirect('/admin/category/view_word/' . $category_id . '/1');
+    }
+
+    public function view_all_users($page_number)
+    {
+        $user_model = new User();
+        $ten_users = $user_model->get_ten_users_data($page_number);
+        return view('/admin/users', compact('ten_users'));
+    }
+
+    public function add_user()
+    {
+        return view('/admin/user_add');
+    }
+
+    public function store_user(Request $request)
+    {
+        $user_model = new User();
+        $user_model = $user_model->store($request);
+
+        return redirect('/admin/users/1');
     }
 }

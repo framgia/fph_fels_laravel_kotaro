@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -38,5 +39,24 @@ class User extends Authenticatable
         $user_avatar = User::where('id', $id)->first()->avatar_url;
 
         return $user_avatar;
+    }
+
+    public function get_ten_users_data($page_number)
+    {
+        return $five_categories_data = User::orderBy('updated_at', 'desc')->latest()->offset(($page_number - 1) * 10)->limit(10)->get();
+    }
+
+    public function store($request)
+    {
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'string', 'min:6', 'confirmed'],
+        ]);
+        $new_user = new User();
+        $new_user->name = $request->name;
+        $new_user->email = $request->email;
+        $new_user->password = Hash::make($request->password);
+        $new_user->save();
     }
 }

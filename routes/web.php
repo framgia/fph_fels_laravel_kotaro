@@ -49,6 +49,9 @@ route::group(['middleware' => ['auth', 'can:admin']], function () {
     Route::patch('/admin/category/edit_word/store/{word_id}', 'AdminController@category_restore_word');
     Route::get('/admin/category/view_delete_word/{word_id}', 'AdminController@category_view_delete_word');
     Route::delete('/admin/category/delete_word/{word_id}', 'AdminController@category_delete_word');
+    Route::get('/admin/users/{page_number}', 'AdminController@view_all_users');
+    Route::get('/admin/user/add', 'AdminController@add_user');
+    Route::post('/admin/user/store', 'AdminController@store_user');
 });
 
 
