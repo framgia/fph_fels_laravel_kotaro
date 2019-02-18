@@ -18,7 +18,7 @@
                 </tr>
                 @foreach($five_categories_data as $five_category_data)
                 <tr>
-                    <td>{{$five_category_data->title}}</td>
+                    <td><a href="/admin/category/view_word/{{$five_category_data->id}}/1">{{$five_category_data->title}}</a></td>
                     <td>{{$five_category_data->description}}</td>
                     <td>
                         <a href="/admin/category/add_word/{{$five_category_data->id}}">Add word</a> | <a href="/admin/category/edit/{{$five_category_data->id}}">Edit</a> | <a href="/admin/category/delete_view/{{$five_category_data->id}}">Delete</a>

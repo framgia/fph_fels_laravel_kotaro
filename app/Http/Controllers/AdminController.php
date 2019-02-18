@@ -84,4 +84,41 @@ class AdminController extends BaseController
 
         return redirect('/admin/categories/1');
     }
+
+    public function category_view_words($category_id, $page_number)
+    {
+        $word_model = new Word();
+        $ten_words = $word_model->get_ten_words_data($category_id, $page_number);
+        return view('/admin/category_view_words', compact('category_id', 'ten_words', 'page_number'));
+    }
+
+    public function category_edit_word($word_id)
+    {
+        $word_model = new Word();
+        $word = $word_model->get_word_by_id($word_id);
+        return view('/admin/category_edit_word', compact('word'));
+    }
+
+    public function category_restore_word($word_id, Request $request)
+    {
+        $word_model = new Word();
+        $category_id = $word_model->restore($word_id, $request);
+        return redirect('/admin/category/view_word/' . $category_id . '/1');
+    }
+
+    public function category_view_delete_word($word_id)
+    {
+        $word_model = new Word();
+        $word = $word_model->get_word_by_id($word_id);
+        return view('/admin/category_delete_word', compact('word'));
+    }
+
+    public function category_delete_word($word_id)
+    {
+        $word = Word::where('id', $word_id)->first();
+        $category_id = $word->category_id;
+        $word->delete();
+
+        return redirect('/admin/category/view_word/' . $category_id . '/1');
+    }
 }

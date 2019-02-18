@@ -68,4 +68,29 @@ class Word extends Model
         }
         $new_word->save();
     }
+
+    public function get_ten_words_data($category_id, $page_number)
+    {
+        return $five_categories_data = Word::where('category_id', $category_id)->orderBy('updated_at', 'desc')->latest()->offset(($page_number - 1) * 10)->limit(10)->get();
+    }
+
+    public function restore($word_id, $request)
+    {
+        $word = Word::where('id', $word_id)->first();
+        $word->word = $request->word;
+
+        $p = 1;
+        for ($i = 1; $i < 5; $i++) {
+            $choicei = "choice" . $i;
+            $wrong_answer_p = "wrong_answer_" . $p;
+            if ($request->answer == "choice$i") {
+                $word->answer = $request->$choicei;
+            } else {
+                $word->$wrong_answer_p = $request->$choicei;
+                $p++;
+            }
+        }
+        $word->update();
+        return $word->category_id;
+    }
 }

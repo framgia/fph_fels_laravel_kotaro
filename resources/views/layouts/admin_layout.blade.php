@@ -20,7 +20,7 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item active">
-                    <a class="nav-link" href="#">Categories</a>
+                    <a class="nav-link" href="/admin/categories/1">Categories</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">link2</a>
