@@ -147,4 +147,40 @@ class AdminController extends BaseController
 
         return redirect('/admin/users/1');
     }
+
+    public function view_edit_user($id)
+    {
+        $user = User::select('id', 'name', 'email')->find($id);
+
+        return view('/admin/user_edit', compact('user'));
+    }
+
+    public function restore_user($id, Request $request)
+    {
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+        ]);
+        $user = User::find($id);
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->update();
+
+        return redirect('/admin/users/1');
+    }
+
+    public function view_destroy_user($id)
+    {
+        $user = User::select('id', 'name', 'email')->find($id);
+
+        return view('/admin/user_delete', compact('user'));
+    }
+
+    public function destroy_user($id)
+    {
+        $user = User::select('id', 'name', 'email')->find($id);
+        $user->delete();
+
+        return redirect('/admin/users/1');
+    }
 }

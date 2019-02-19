@@ -10,7 +10,7 @@
         {{$user->email}}
     </td>
     <td>
-        <a href="/admin/user/edit/{{$user->id}}">Edit</a> | <a href="/admin/user/delete/{{$user->id}}">Delete</a>
+        <a href="/admin/user/edit/{{$user->id}}">Edit</a> | <a href="/admin/user/view_delete/{{$user->id}}">Delete</a>
     </td>
 </tr>
 @endforeach

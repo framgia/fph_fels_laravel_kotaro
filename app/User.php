@@ -43,7 +43,7 @@ class User extends Authenticatable
 
     public function get_ten_users_data($page_number)
     {
-        return $five_categories_data = User::orderBy('updated_at', 'desc')->latest()->offset(($page_number - 1) * 10)->limit(10)->get();
+        return $five_categories_data = User::select('id', 'name', 'email')->orderBy('updated_at', 'desc')->latest()->offset(($page_number - 1) * 10)->limit(10)->get();
     }
 
     public function store($request)

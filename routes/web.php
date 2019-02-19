@@ -52,6 +52,10 @@ route::group(['middleware' => ['auth', 'can:admin']], function () {
     Route::get('/admin/users/{page_number}', 'AdminController@view_all_users');
     Route::get('/admin/user/add', 'AdminController@add_user');
     Route::post('/admin/user/store', 'AdminController@store_user');
+    Route::get('/admin/user/edit/{id}', 'AdminController@view_edit_user');
+    Route::patch('/admin/user/restore/{id}', 'AdminController@restore_user');
+    Route::get('/admin/user/view_delete/{id}', 'AdminController@view_destroy_user');
+    Route::delete('/admin/user/delete/{id}', 'AdminController@destroy_user');
 });
 
 
