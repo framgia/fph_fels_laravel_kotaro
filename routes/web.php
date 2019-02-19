@@ -56,6 +56,9 @@ route::group(['middleware' => ['auth', 'can:admin']], function () {
     Route::patch('/admin/user/restore/{id}', 'AdminController@restore_user');
     Route::get('/admin/user/view_delete/{id}', 'AdminController@view_destroy_user');
     Route::delete('/admin/user/delete/{id}', 'AdminController@destroy_user');
+    Route::get('/admin/admins/{page_number}', 'AdminController@view_all_admins');
+    Route::get('/admin/admin/add', 'AdminController@add_admin');
+    Route::post('/admin/admin/store', 'AdminController@store_admin');
 });
 
 

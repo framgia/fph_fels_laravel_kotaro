@@ -59,4 +59,24 @@ class User extends Authenticatable
         $new_user->password = Hash::make($request->password);
         $new_user->save();
     }
+
+    public function get_ten_admins_data($page_number)
+    {
+        return $five_categories_data = User::select('id', 'name', 'email')->where('admin', '1')->orderBy('updated_at', 'desc')->latest()->offset(($page_number - 1) * 10)->limit(10)->get();
+    }
+
+    public function admin_store($request)
+    {
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'string', 'min:6', 'confirmed'],
+        ]);
+        $new_admin = new User();
+        $new_admin->name = $request->name;
+        $new_admin->email = $request->email;
+        $new_admin->password = Hash::make($request->password);
+        $new_admin->admin = true;
+        $new_admin->save();
+    }
 }

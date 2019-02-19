@@ -26,7 +26,7 @@
                     <a class="nav-link" href="/admin/users/1">Users</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Link3</a>
+                    <a class="nav-link" href="/admin/admins/1">Admins</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/logout">Logout</a>

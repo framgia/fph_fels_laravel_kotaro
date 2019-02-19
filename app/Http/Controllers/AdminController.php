@@ -183,4 +183,24 @@ class AdminController extends BaseController
 
         return redirect('/admin/users/1');
     }
+
+    public function view_all_admins($page_number)
+    {
+        $user_model = new User();
+        $ten_admins = $user_model->get_ten_admins_data($page_number);
+        return view('/admin/admins', compact('ten_admins'));
+    }
+
+    public function add_admin()
+    {
+        return view('/admin/admin_add');
+    }
+
+    public function store_admin(Request $request)
+    {
+        $user_model = new User();
+        $user_model = $user_model->admin_store($request);
+
+        return redirect('/admin/admins/1');
+    }
 }

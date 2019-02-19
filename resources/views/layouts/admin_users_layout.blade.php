@@ -23,7 +23,7 @@
         </table>
     </div>
     <div class="mt-lg-5">
-        <a href="/admin/user/add"><button class="btn btn-primary">+ add account</button></a>
+        <a href="/admin/@yield('user_or_admin','user')/add"><button class="btn btn-@yield('button_color','primary')">+ add @yield('user_or_admin','user') account</button></a>
     </div>
 </div>
 @endsection
