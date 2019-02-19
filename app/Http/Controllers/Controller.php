@@ -96,7 +96,7 @@ class Controller extends BaseController
         $relationship_model = new Relationship();
         $relationship_model->store($following_id);
 
-        return redirect('/user/profile/' . $following_id);
+        return back();
     }
 
     public function followed_destroy($followed_id)
@@ -104,7 +104,7 @@ class Controller extends BaseController
         $relationship_model = new Relationship();
         $relationship_model->followed_destroy($followed_id);
 
-        return redirect('/user/profile/' . $followed_id);
+        return back();
     }
 
     public function categories_view()
@@ -191,6 +191,24 @@ class Controller extends BaseController
         }
 
         return redirect('/user/categorieslist');
+    }
+
+    public function userlist_view($page_number)
+    {
+        $user_model = new User();
+        $ten_users = $user_model->get_ten_all_users_data($page_number);
+
+        foreach ($ten_users as $user) {
+            if (Relationship::where('user_id', Auth::id())->where('followed_id', $user->id)->exists()) {
+                $user->followed = 1;
+            } elseif ($user->id == Auth::id()) {
+                $user->followed = 2;
+            } else {
+                $user->followed = 0;
+            }
+        }
+
+        return view('/user/userlist', compact('ten_users', 'page_number'));
     }
 }
 

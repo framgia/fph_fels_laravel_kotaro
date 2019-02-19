@@ -31,6 +31,12 @@ Route::get('/user/categorieslist', 'Controller@categories_view');
 Route::get('/user/lesson/{category_id}', 'Controller@lesson_view');
 Route::post('/user/lesson/{category_id}', 'Controller@lesson_check');
 Route::get('/user/result/{category_id}', 'Controller@result_view');
+Route::post('/user/lesson/{category_id}', 'Controller@lesson_check');
+Route::get('/user/userlist/{page_number}', 'Controller@userlist_view');
+Route::get('/user/userlist/{follow_id}/follow', 'Controller@userlist_view');
+Route::post('/user/userlist/{follow_id}/follow', 'Controller@following_store');
+Route::get('/user/userlist/{follow_id}/unfollow', 'Controller@userlist_view');
+Route::delete('/user/userlist/{follow_id}/unfollow', 'Controller@followed_destroy');
 
 
 Route::get('/logout', 'Auth\LoginController@logout');

@@ -28,13 +28,13 @@
                     @if($followed_exists == 0)
                     <form action="{{$user_data['id']}}/follow" method="POST">
                         @csrf
-                        <button class="btn" name="follow_id">follow</button>
+                        <button class="btn btn-primary" name="follow_id">follow</button>
                     </form>
                     @elseif($followed_exists == 1)
                     <form action="{{$user_data['id']}}/unfollow" method="POST">
                         @csrf
                         @method('DELETE')
-                        <button class="btn" type="submit">unfollow</button>
+                        <button class="btn btn-info" type="submit">unfollow</button>
                     </form>
                     @elseif($user_data['id'] == Auth::id())
                     @endif

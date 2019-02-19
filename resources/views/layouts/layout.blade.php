@@ -23,7 +23,7 @@
                     <a class="nav-link" href="/user/categorieslist">Categories</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">link2</a>
+                    <a class="nav-link" href="/user/userlist/1">User list</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Link3</a>
