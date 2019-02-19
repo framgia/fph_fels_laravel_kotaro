@@ -157,16 +157,29 @@ class AdminController extends BaseController
 
     public function restore_user($id, Request $request)
     {
-        $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-        ]);
+        $user = User::find($id);
+        if ($user->email === $request->email) {
+            $request->validate([
+                'name' => ['required', 'string', 'max:255'],
+            ]);
+        } else {
+            $request->validate([
+                'name' => ['required', 'string', 'max:255'],
+                'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            ]);
+        }
+
         $user = User::find($id);
         $user->name = $request->name;
         $user->email = $request->email;
         $user->update();
 
-        return redirect('/admin/users/1');
+        if ($user->admin) {
+            return redirect('/admin/admins/1');
+        } else {
+            return redirect('/admin/users/1');
+        }
+
     }
 
     public function view_destroy_user($id)
