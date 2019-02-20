@@ -13,6 +13,7 @@ class CreateWordsTable extends Migration
     {
         Schema::create('words', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('word');
             $table->string('answer');
             $table->string('wrong_answer_1');
             $table->string('wrong_answer_2');
