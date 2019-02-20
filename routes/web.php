@@ -9,12 +9,39 @@
 | routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
 |
-*/
+ */
 
+Route::group(['middleware' => ['auth']], function () {
+    Route::get('/', function () {
+        return view('/user/dashboad');
+    });
+});
 Route::get('/', function () {
     return view('welcome');
 });
-
 Auth::routes();
+Route::get('/user/dashboard', 'Controller@user_dashboard_view');
+Route::get('/user/profile/{id}', 'Controller@profile_view');
+Route::get('/user/profile/{following_id}/follow', 'Controller@profile_view');
+Route::post('/user/profile/{following_id}/follow', 'Controller@following_store');
+Route::get('/user/profile/{followed_id}/unfollow', 'Controller@profile_view');
+Route::delete('/user/profile/{followed_id}/unfollow', 'Controller@followed_destroy');
+Route::get('/user/learnedwordslist/{id}', 'Controller@user_learned_words_list_view');
+Route::get('/user/categorieslist', 'Controller@categories_view');
+Route::get('/user/lesson/{category_id}', 'Controller@lesson_view');
+Route::post('/user/lesson/{category_id}', 'Controller@lesson_check');
+Route::get('/user/result/{category_id}', 'Controller@result_view');
 
-Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/logout', 'Auth\LoginController@logout');
+
+route::group(['middleware' => ['auth', 'can:admin']], function () {
+    Route::get('/admin/categories/{page_number}', 'AdminController@categories_view');
+    Route::get('/admin/category/edit/{category_id}', 'AdminController@category_edit_view');
+    Route::patch('/admin/category/restore/{category_id}', 'AdminController@category_edit_store');
+    Route::get('/admin/category/delete_view/{category_id}', 'AdminController@category_delete_view');
+    Route::get('/admin/category/delete/{category_id}', 'AdminController@categories_view');
+    Route::delete('/admin/category/delete/{category_id}', 'AdminController@category_delete');
+});
+
+
