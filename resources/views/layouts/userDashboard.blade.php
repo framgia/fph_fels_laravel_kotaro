@@ -35,26 +35,26 @@
     </nav>
     <div class="container mt-lg-4">
         <div class="row">
-            <div class="col-lg-3">
-                <div class="border">
-                    <div>
-                        <div>
-                            <img src="{{asset('storage/'.auth()->user()->avatar_url)}}" alt="" class="img-fluid rounded">
+            <div class="col-lg-3 mt-lg-5">
+                <div class="border shadow">
+                    <div class="m-lg-3">
+                        <div class="w-50 h-50 mt-lg-5 mb-lg-4 mx-auto rounded-circle border">
+                            <img src=" {{asset('storage/'.auth()->user()->avatar_url)}}" alt="" class="img-fluid rounded-circle">
                         </div>
-                        <div class="">
-                            {{auth()->user()->name}}
+                        <div class="text-lg-center mb-lg-4">
+                            <span class="lead mx-auto"><strong>{{auth()->user()->name}}</strong></span>
                         </div>
-                        <div>
+                        <div class="mb-lg-2">
                             <a href="#">Learned {{$learnedWordsNumber}} words</a>
                         </div>
-                        <div>
+                        <div class="mb-lg-2">
                             <a href="#">Learned {{$learnedLessonsNumber}} lessons</a>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-1"></div>
-            <div class="col-lg-8">
+            <div class="col-lg-2"></div>
+            <div class="col-lg-7">
                 @yield('content')
             </div>
 
