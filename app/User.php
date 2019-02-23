@@ -40,4 +40,14 @@ class User extends Authenticatable
     {
         return $this->hasMany(LearnedLesson::class);
     }
+
+    public function relationship()
+    {
+        return $this->hasMany(Relationship::class);
+    }
+
+    public function relationshipOrderByUpdatedAtDesc()
+    {
+        return $this->hasMany(Relationship::class)->orderBy('updated_at', 'desc');
+    }
 }
