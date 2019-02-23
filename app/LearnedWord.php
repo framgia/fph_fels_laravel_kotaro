@@ -8,9 +8,7 @@ class LearnedWord extends Model
 {
     protected $guarded = ['id'];
     protected $fillable = [
-        'user_id',
-        'category_id',
-        'progress_number',
+        'user_id', 'category_id', 'progress_number',
     ];
 
     public function user()
