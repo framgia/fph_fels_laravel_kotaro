@@ -20,7 +20,8 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::group(['middleware' => ['auth']], function () {
-    Route::get('/dashboard', 'UserController@dashboardView');
+    Route::get('/dashboard/{id}', 'UserController@dashboardView');
+    Route::get('/profile/learnedwords/{id}', 'UserController@profileLearnedWordsView');
 });
 
 Route::get('/logout', 'Auth\LoginController@logout');

@@ -2,20 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Word;
 use App\User;
 use App\Category;
+use App\LearnedWord;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    public function dashboardView()
+    public function dashboardView($id)
     {
-        $learnedWordsNumber = app(User::class)::find(auth()->id())->learnedWord->count();
-        $learnedLessonsNumber = app(User::class)::find(auth()->id())->learnedLesson->count();
-
+        $user = app(User::class)::find($id);
         $activities = collect();
 
-        $followingUsersId = app(User::class)::find(auth()->id())->relationship;
+        $followingUsersId = $user->relationship;
         foreach ($followingUsersId as $followingUserId) {
             $followingUser = app(User::class)::find($followingUserId->following_id);
             $activities[] = collect([
@@ -33,7 +33,7 @@ class UserController extends Controller
             }
         }
 
-        $learnedLessons = app(User::class)::find(auth()->id())->learnedLesson;
+        $learnedLessons = $user->learnedLesson;
         foreach ($learnedLessons as $learnedLesson) {
             $learnedCategory = app(Category::class)::find($learnedLesson->category_id);
             $activities[] = collect([
@@ -58,9 +58,23 @@ class UserController extends Controller
         $activities = $activities->sortByDesc('updated_at');
 
         return view('/user/dashboard', compact(
-            'learnedWordsNumber',
-            'learnedLessonsNumber',
-            'activities'
+            'activities',
+            'user'
+        ));
+    }
+
+    public function profileLearnedWordsView($id)
+    {
+        $user = app(User::class)::find($id);
+        $learnedWords = $user->learnedWord;
+
+        foreach ($learnedWords as $learnedWord) {
+            $learnedWord->word = app(Word::class)::find($learnedWord->word_id);
+        }
+
+        return view('/user/learnedWords', compact(
+            'learnedWords',
+            'user'
         ));
     }
 }

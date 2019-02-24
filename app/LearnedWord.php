@@ -15,4 +15,9 @@ class LearnedWord extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function word()
+    {
+        return $this->hasOne(Word::class);
+    }
 }
