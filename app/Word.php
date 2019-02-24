@@ -14,4 +14,9 @@ class Word extends Model
     {
         return $this->belongsTo(Category::class);
     }
+
+    public function learnedWord()
+    {
+        return $this->belongsTo(learnedWord::class, 'word_id', 'id');
+    }
 }
