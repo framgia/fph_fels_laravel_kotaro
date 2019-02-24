@@ -41,13 +41,18 @@ class User extends Authenticatable
         return $this->hasMany(LearnedLesson::class);
     }
 
+    public function learnedLessonOrderByUpdatedAtDescTakeTen()
+    {
+        return $this->hasMany(LearnedLesson::class)->orderBy('updated_at', 'desc')->take(10);
+    }
+
     public function relationship()
     {
         return $this->hasMany(Relationship::class);
     }
 
-    public function relationshipOrderByUpdatedAtDesc()
+    public function relationshipOrderByUpdatedAtDescTakeTen()
     {
-        return $this->hasMany(Relationship::class)->orderBy('updated_at', 'desc');
+        return $this->hasMany(Relationship::class)->orderBy('updated_at', 'desc')->take(10);
     }
 }

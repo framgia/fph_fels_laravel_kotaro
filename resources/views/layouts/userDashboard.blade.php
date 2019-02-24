@@ -21,11 +21,11 @@
                 <li class="nav-item active">
                     <a class="nav-link" href="/profile/learnedwords/{{auth()->user()->id}}">Learned words</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">リンク1</a>
+                <li class="nav-item active">
+                    <a class="nav-link" href="/profile/learnedlessons/{{auth()->user()->id}}">Learned lessons</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">リンク2</a>
+                <li class="nav-item  active">
+                    <a class="nav-link" href="/profile/activities/{{auth()->user()->id}}">Activities</a>
                 </li>
             </ul>
             <span class="navbar-text">
@@ -48,13 +48,13 @@
                             <a href="/profile/learnedwords/{{$user->id}}">Learned {{$user->learnedWord->count()}} words</a>
                         </div>
                         <div class="mb-lg-2">
-                            <a href="#">Learned {{$user->learnedLesson->count()}} lessons</a>
+                            <a href="/profile/learnedlessons/{{$user->id}}">Learned {{$user->learnedLesson->count()}} lessons</a>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-2"></div>
-            <div class="col-lg-7">
+            <div class="col-lg-1"></div>
+            <div class="col-lg-8">
                 @yield('content')
             </div>
 

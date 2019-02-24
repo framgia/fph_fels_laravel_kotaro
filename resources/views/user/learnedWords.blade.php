@@ -13,7 +13,7 @@
             Answer
         </div>
     </div>
-    <div class="row" style="height:500px; overflow:scroll;">
+    <div class="row" style="max-height:500px; overflow:scroll;">
         @foreach($learnedWords as $learnedWord)
         <div class="col-6 mb-1 mt-1">
             {{$learnedWord->word->word}}
