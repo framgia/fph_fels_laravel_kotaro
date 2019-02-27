@@ -51,6 +51,11 @@ class User extends Authenticatable
         return $this->hasMany(Relationship::class);
     }
 
+    public function checkRelationship($id)
+    {
+        return $this->hasMany(Relationship::class)->where('following_id', $id)->exists();
+    }
+
     public function relationshipOrderByUpdatedAtDescTakeTen()
     {
         return $this->hasMany(Relationship::class)->orderBy('updated_at', 'desc')->take(10);

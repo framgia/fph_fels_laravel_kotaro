@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Word;
 use App\User;
 use App\Category;
+use App\Relationship;
 use App\LearnedWord;
 use Illuminate\Http\Request;
 
@@ -52,18 +53,18 @@ class UserController extends Controller
         return $activities;
     }
 
-    public function dashboardView($id)
+    public function dashboardView()
     {
         $activities = collect();
-        $user = app(User::class)::find($id);
+        $user = app(User::class)::find(auth()->user()->id);
         $followingUsersId = $user->relationship;
 
-        $activities = $activities->concat($this->userFollowingActivities($id));
+        $activities = $activities->concat($this->userFollowingActivities(auth()->user()->id));
         foreach ($followingUsersId as $followingUserId) {
             $activities = $activities->concat($this->userFollowingActivities($followingUserId->following_id));
         }
 
-        $activities = $activities->concat($this->userLearnedLessonsActivities($id));
+        $activities = $activities->concat($this->userLearnedLessonsActivities(auth()->user()->id));
         foreach ($followingUsersId as $followingUserId) {
             $activities = $activities->concat($this->userLearnedLessonsActivities($followingUserId->following_id));
         }
@@ -99,13 +100,29 @@ class UserController extends Controller
         return view('/user/learnedLessons', compact('activities', 'user'));
     }
 
-    public function profileActivitiesView($id)
+    public function profileView($id)
     {
         $user = app(User::class)::find($id);
         $activities = collect();
         $activities = $activities->concat($this->userFollowingActivities($id));
         $activities = $activities->concat($this->userLearnedLessonsActivities($id));
         $activities = $activities->sortByDesc('updated_at');
-        return view('/user/activities', compact('activities', 'user'));
+
+        return view('/user/profile', compact('user', 'activities'));
+    }
+
+    public function userFollow(Request $request)
+    {
+        Relationship::create([
+            'user_id' => auth()->user()->id,
+            'following_id' => $request->id,
+        ]);
+        return back();
+    }
+
+    public function userUnfollow(Request $request)
+    {
+        Relationship::where('user_id', auth()->user()->id)->where('following_id', $request->id)->delete();
+        return back();
     }
 }

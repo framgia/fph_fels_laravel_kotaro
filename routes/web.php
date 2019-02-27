@@ -20,10 +20,12 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::group(['middleware' => ['auth']], function () {
-    Route::get('/dashboard/{id}', 'UserController@dashboardView');
-    Route::get('/profile/learnedwords/{id}', 'UserController@profileLearnedWordsView');
-    Route::get('/profile/learnedlessons/{id}', 'UserController@profileLearnedLessonsView');
-    Route::get('/profile/activities/{id}', 'UserController@profileActivitiesView');
+    Route::get('/dashboard', 'UserController@dashboardView');
+    Route::get('/profile/{id}', 'UserController@profileView');
+    Route::get('/profile/{id}/learnedwords', 'UserController@profileLearnedWordsView');
+    Route::get('/profile/{id}/learnedlessons', 'UserController@profileLearnedLessonsView');
+    Route::post('/relationship/follow', 'UserController@userFollow');
+    Route::delete('/relationship/unfollow', 'UserController@userUnfollow');
 });
 
 Route::get('/logout', 'Auth\LoginController@logout');

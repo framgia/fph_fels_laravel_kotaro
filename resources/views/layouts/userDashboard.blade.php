@@ -12,20 +12,20 @@
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="/dashboard/{{auth()->user()->id}}">FELS</a>
+        <a class="navbar-brand" href="/dashboard">FELS</a>
         <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="ナビゲーションの切替">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarText">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="/profile/learnedwords/{{auth()->user()->id}}">Learned words</a>
+                    <a class="nav-link" href="/profile/{{auth()->user()->id}}/learnedwords">Learned words</a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="/profile/learnedlessons/{{auth()->user()->id}}">Learned lessons</a>
+                    <a class="nav-link" href="/profile/{{auth()->user()->id}}/learnedlessons">Learned lessons</a>
                 </li>
                 <li class="nav-item  active">
-                    <a class="nav-link" href="/profile/activities/{{auth()->user()->id}}">Activities</a>
+                    <a class="nav-link" href="/profile/{{auth()->user()->id}}">Profile</a>
                 </li>
             </ul>
             <span class="navbar-text">
@@ -45,10 +45,27 @@
                             <span class="lead mx-auto"><strong>{{$user->name}}</strong></span>
                         </div>
                         <div class="mb-lg-2">
-                            <a href="/profile/learnedwords/{{$user->id}}">Learned {{$user->learnedWord->count()}} words</a>
+                            <a href="/profile/{{$user->id}}/learnedwords">Learned {{$user->learnedWord->count()}} words</a>
                         </div>
                         <div class="mb-lg-2">
-                            <a href="/profile/learnedlessons/{{$user->id}}">Learned {{$user->learnedLesson->count()}} lessons</a>
+                            <a href="/profile/{{$user->id}}/learnedlessons">Learned {{$user->learnedLesson->count()}} lessons</a>
+                        </div>
+                        <div>
+                            @if($user->id == auth()->user()->id)
+                            @else
+                            @if(Auth::user()->checkRelationship($user->id))
+                            <form action="/relationship/unfollow" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button class="btn btn-danger form-control" type="submit" name="id" value="{{$user->id}}">Unfollow</button>
+                            </form>
+                            @else
+                            <form action="/relationship/follow" method="POST">
+                                @csrf
+                                <button class="btn btn-primary form-control" type="submit" name="id" value="{{$user->id}}">Follow</button>
+                            </form>
+                            @endif
+                            @endif
                         </div>
                     </div>
                 </div>
