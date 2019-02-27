@@ -19,4 +19,12 @@ class Category extends Model
     {
         return $this->hasMany(Word::class);
     }
+
+    public function getTenCategories($pageNumber)
+    {
+        if ($pageNumber <= 0) {
+            $pageNumber = 1;
+        }
+        return $this::orderBy('updated_at', 'desc')->skip(10 * ($pageNumber - 1))->take(10)->get();
+    }
 }

@@ -125,4 +125,10 @@ class UserController extends Controller
         Relationship::where('user_id', auth()->user()->id)->where('following_id', $request->id)->delete();
         return back();
     }
+
+    public function categoriesView($pageNumber)
+    {
+        $categories = app(Category::class)->getTenCategories($pageNumber);
+        return view('/user/categoryList', compact('categories', 'pageNumber'));
+    }
 }
