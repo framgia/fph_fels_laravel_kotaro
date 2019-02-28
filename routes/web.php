@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\UserController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -11,10 +13,20 @@
 |
 */
 
+
 Route::get('/', function () {
     return view('welcome');
 });
-
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::group(['middleware' => ['auth']], function () {
+    Route::get('/dashboard', 'UserController@dashboardView');
+    Route::get('/profile/{id}', 'UserController@profileView');
+    Route::get('/profile/{id}/learnedwords', 'UserController@profileLearnedWordsView');
+    Route::get('/profile/{id}/learnedlessons', 'UserController@profileLearnedLessonsView');
+    Route::post('/relationship/follow', 'UserController@userFollow');
+    Route::delete('/relationship/unfollow', 'UserController@userUnfollow');
+    Route::get('/categories/{pageNumber}', 'UserController@categoriesView');
+});
+
+Route::get('/logout', 'Auth\LoginController@logout');
