@@ -17,6 +17,6 @@ class Word extends Model
 
     public function learnedWord()
     {
-        return $this->belongsTo(learnedWord::class, 'word_id', 'id');
+        return $this->hasMany(learnedWord::class, 'word_id', 'id');
     }
 }

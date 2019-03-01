@@ -18,6 +18,11 @@ class LearnedWord extends Model
 
     public function word()
     {
-        return $this->hasOne(Word::class);
+        return $this->belongsTo(Word::class);
+    }
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
     }
 }

@@ -27,6 +27,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/relationship/follow', 'UserController@userFollow');
     Route::delete('/relationship/unfollow', 'UserController@userUnfollow');
     Route::get('/categories/{pageNumber}', 'UserController@categoriesView');
+    Route::get('/category/{categoryId}', 'UserController@lessonView');
+    Route::post('/answer/{wordId}', 'UserController@answerCheck');
 });
 
 Route::get('/logout', 'Auth\LoginController@logout');

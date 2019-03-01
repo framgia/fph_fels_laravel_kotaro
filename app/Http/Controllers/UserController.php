@@ -7,7 +7,9 @@ use App\User;
 use App\Category;
 use App\Relationship;
 use App\LearnedWord;
+use App\LearnedLesson;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
@@ -45,7 +47,7 @@ class UserController extends Controller
             }
             $learnedCategory = app(Category::class)::find($learnedLesson->category_id);
             $activities->push([
-                'message' => '<a href="/Category/' . $user->id . '">' . $user->userName . '</a> learned ' . $learnedLesson->progress_number . ' of ' . $learnedCategory->word->count() . ' words in <a href="/Category/' . $learnedCategory->id . '">' . $learnedCategory->title . '</a>.',
+                'message' => '<a href="/Category/' . $user->id . '">' . $user->userName . '</a> learned ' . $learnedLesson->progress_number . ' of ' . $learnedCategory->word->count() . ' words in <a href="/category/' . $learnedCategory->id . '">' . $learnedCategory->title . '</a>.',
                 'avatar_url' => $user->avatar_url,
                 'updated_at' => $learnedLesson->updated_at
             ]);
@@ -130,5 +132,46 @@ class UserController extends Controller
     {
         $categories = app(Category::class)->getTenCategories($pageNumber);
         return view('/user/categoryList', compact('categories', 'pageNumber'));
+    }
+
+    public function lessonView($categoryId)
+    {
+        $category = app(Category::class)::find($categoryId);
+        $userWords = auth()->user()->learnedWord;
+        !$category ? abort(404) : '';
+        $learnedWords = collect();
+        foreach ($userWords as $userWord) {
+            $categoryId == $userWord->word->category_id ? $learnedWords->push($userWord) : '';
+        }
+        $words = $category->word;
+        foreach ($words as $word) {
+            $token = true;
+            foreach ($learnedWords as $learnedWord) {
+                $word->id == $learnedWord->word->id ? $token = false : '';
+            }
+            if ($token) {
+                $choices = [
+                    $word->answer, $word->wrong_answer_1,
+                    $word->wrong_answer_2, $word->wrong_answer_3
+                ];
+                shuffle($choices);
+                return view('/user/lesson', compact('word', 'category', 'learnedWords', 'choices'));
+            }
+        }
+        dd("result page");
+        return 0;
+    }
+
+    public function answerCheck($wordId, Request $request)
+    {
+        $word = app(Word::class)::find($wordId);
+        $newWord = new LearnedWord();
+        $newWord->word_id = $word->id;
+        $newWord->user_id = auth()->user()->id;
+        $word->answer === $request->choice ? $newWord->correct = true : $newWord->correct = false;
+        if (!app(LearnedWord::class)->where('user_id', auth()->user()->id)->where('word_id', $wordId)->exists()) {
+            $newWord->save();
+        }
+        return back();
     }
 }

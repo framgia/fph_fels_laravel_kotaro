@@ -16,7 +16,6 @@ class CreateLearnedLessonsTable extends Migration
             $table->foreign('user_id')->references('id')->on('users');
             $table->integer('category_id')->unsigned();
             $table->foreign('category_id')->references('id')->on('categories');
-            $table->integer('progress_number')->default(0);
             $table->timestamps();
         });
     }
