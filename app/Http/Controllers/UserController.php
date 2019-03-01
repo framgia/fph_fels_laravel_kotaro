@@ -47,7 +47,10 @@ class UserController extends Controller
             }
             $learnedCategory = app(Category::class)::find($learnedLesson->category_id);
             $activities->push([
-                'message' => '<a href="/Category/' . $user->id . '">' . $user->userName . '</a> learned ' . $learnedLesson->progress_number . ' of ' . $learnedCategory->word->count() . ' words in <a href="/category/' . $learnedCategory->id . '">' . $learnedCategory->title . '</a>.',
+                'message' => '<a href="/Category/' . $user->id . '">' . $user->userName . '</a> learned ' .
+                    $this->learnedWordGetByCategoryid($learnedCategory->id)->where('correct', true)->count() . ' of ' .
+                    $this->learnedWordGetByCategoryid($learnedCategory->id)->count() . ' words in <a href="/category/' .
+                    $learnedCategory->id . '">' . $learnedCategory->title . '</a>.',
                 'avatar_url' => $user->avatar_url,
                 'updated_at' => $learnedLesson->updated_at
             ]);
@@ -134,15 +137,21 @@ class UserController extends Controller
         return view('/user/categoryList', compact('categories', 'pageNumber'));
     }
 
-    public function lessonView($categoryId)
+    public function learnedWordGetByCategoryid($categoryId)
     {
-        $category = app(Category::class)::find($categoryId);
         $userWords = auth()->user()->learnedWord;
-        !$category ? abort(404) : '';
         $learnedWords = collect();
         foreach ($userWords as $userWord) {
             $categoryId == $userWord->word->category_id ? $learnedWords->push($userWord) : '';
         }
+        return $learnedWords;
+    }
+
+    public function lessonView($categoryId)
+    {
+        $category = app(Category::class)::find($categoryId);
+        !$category ? abort(404) : '';
+        $learnedWords = $this->learnedWordGetByCategoryid($categoryId);
         $words = $category->word;
         foreach ($words as $word) {
             $token = true;
@@ -158,8 +167,8 @@ class UserController extends Controller
                 return view('/user/lesson', compact('word', 'category', 'learnedWords', 'choices'));
             }
         }
-        dd("result page");
-        return 0;
+
+        return $this->lessonResult($categoryId);
     }
 
     public function answerCheck($wordId, Request $request)
@@ -172,6 +181,25 @@ class UserController extends Controller
         if (!app(LearnedWord::class)->where('user_id', auth()->user()->id)->where('word_id', $wordId)->exists()) {
             $newWord->save();
         }
+
         return back();
+    }
+
+    public function lessonResult($categoryId)
+    {
+        $category = app(Category::class)::find($categoryId);
+        $words = $this->learnedWordGetByCategoryid($categoryId);
+        $count = 0;
+        foreach ($words as $word) {
+            $word->correct ? $count++ : '';
+        }
+        if (!auth()->user()->learnedLesson()->where('category_id', $categoryId)->exists()) {
+            LearnedLesson::create([
+                'user_id' => auth()->user()->id,
+                'category_id' => $categoryId,
+            ]);
+        }
+
+        return view('/user/result', compact('words', 'category', 'count'));
     }
 }

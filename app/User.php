@@ -41,16 +41,6 @@ class User extends Authenticatable
         return $this->hasMany(LearnedLesson::class);
     }
 
-    public function learnedLessonFilteredByCategoryId($categoryId)
-    {
-        $learnedLessons = $this->hasMany(LearnedLesson::class);
-        $a = collect();
-        foreach ($learnedLessons as $learnedLesson) {
-            $categoryId === $learnedLesson->word->category_id ? $a = push($learnedLesson) : '';
-        }
-        dd($a);
-    }
-
     public function learnedLessonOrderByUpdatedAtDescTakeTen()
     {
         return $this->hasMany(LearnedLesson::class)->orderBy('updated_at', 'desc')->take(10);
