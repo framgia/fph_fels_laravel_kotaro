@@ -29,7 +29,7 @@
                 </li>
             </ul>
             <span class="navbar-text">
-                <a class="nav-link" href="#">Logout</a>
+                <a class="nav-link" href="/logout">Logout</a>
             </span>
         </div>
     </nav>
