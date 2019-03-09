@@ -31,4 +31,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/answer/{wordId}', 'UserController@answerCheck');
 });
 
+Route::group(['middleware' => ['can:admin']], function () {
+    Route::get('/admin/categories/{pageNumber}', 'AdminController@categoriesView')->name('admin');
+});
+
 Route::get('/logout', 'Auth\LoginController@logout');
