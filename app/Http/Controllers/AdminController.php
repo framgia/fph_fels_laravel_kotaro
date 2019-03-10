@@ -29,4 +29,16 @@ class AdminController extends Controller
         app(Category::class)::find($categoryId)->fill($request->all())->update();
         return $this->categoriesView(1);
     }
+
+    public function categoryDestroy($categoryId)
+    {
+        $category = app(Category::class)::find($categoryId);
+        return view('/admin/categoryDelete', compact('category'));
+    }
+
+    public function categoryDelete($categoryId)
+    {
+        app(Category::class)::find($categoryId)->delete();
+        return $this->categoriesView(1);
+    }
 }

@@ -27,7 +27,7 @@
                         {{$category->description}}
                     </td>
                     <td style="min-width:200px;">
-                        <a href="#addWord">Add word</a> | <a href="/admin/category/{{$category->id}}/edit">Edit</a> | <a href="#delete">Delete</a>
+                        <a href="#addWord">Add word</a> | <a href="/admin/category/{{$category->id}}/edit">Edit</a> | <a href="/admin/category/{{$category->id}}/destroy">Delete</a>
                     </td>
                 </tr>
                 @endforeach
