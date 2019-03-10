@@ -33,6 +33,8 @@ Route::group(['middleware' => ['auth']], function () {
 
 Route::group(['middleware' => ['can:admin']], function () {
     Route::get('/admin/categories/{pageNumber}', 'AdminController@categoriesView')->name('admin');
+    Route::get('/admin/category/{categoryId}/edit', 'AdminController@categoryEdit')->name('edit');
+    Route::patch('/admin/category/{categoryId}/restore', 'AdminController@categoryRestore')->name('edit');
 });
 
 Route::get('/logout', 'Auth\LoginController@logout');

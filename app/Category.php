@@ -8,7 +8,7 @@ class Category extends Model
 {
     protected $guarded = ['id'];
     protected $fillable = [
-        'title',
+        'title', 'description'
     ];
     public function learnedLesson()
     {
