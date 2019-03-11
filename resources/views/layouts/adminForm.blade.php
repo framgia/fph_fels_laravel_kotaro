@@ -7,14 +7,14 @@
             @yield('formHeader')
             <div class="form-group">
                 <label for="title">Title</label>
-                <input class="form-control {{$errors->has('title') ? ' is-invalid' : ''}}" type="text" name="title" value="{{$category->title}}" placeholder="E-learning system" required autofocus @yield('readonly','')>
+                <input class="form-control {{$errors->has('title') ? ' is-invalid' : ''}}" type="text" name="title" value="@yield('titleValue')" placeholder="E-learning system" maxlength="50" required autofocus @yield('readonly','')>
                 @if($errors->has('title'))
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $errors->first('title') }}</strong>
                 </span>
                 @endif
                 <label class="mt-3" for="description">Description</label>
-                <textarea type="text" class="form-control {{$errors->has('description') ? ' is-invalid' : ''}}" name="description" id="" cols="30" rows="10" placeholder="something something..." required @yield('readonly','')>{{$category->description}}</textarea>
+                <textarea type="text" class="form-control {{$errors->has('description') ? ' is-invalid' : ''}}" name="description" id="" cols="30" rows="10" placeholder="something something..." maxlength="5000" required @yield('readonly','')>@yield('descriptionValue')</textarea>
                 @if($errors->has('description'))
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $errors->first('description') }}</strong>

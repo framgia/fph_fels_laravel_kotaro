@@ -2,6 +2,7 @@
 @section('pagetitle','Dashboard | Admin')
 @section('body')
 <div class="container">
+    <a href="/admin/add/category"><button class="mt-4 btn btn-primary form-control">Add new Category</button></a>
     <div class="mt-4">
         <table class="table table-hover">
             <thead class="table-primary">
@@ -21,7 +22,7 @@
                 @foreach($categories as $category)
                 <tr>
                     <td class="text-turncate" style="min-width:200px;">
-                        <a href="#{{$category->id}}">{{$category->title}}</a>
+                        <a href="#">{{$category->title}}</a>
                     </td>
                     <td class="text-turncate" style="width:50%; min-width:300px;">
                         {{$category->description}}

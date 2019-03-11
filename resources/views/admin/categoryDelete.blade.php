@@ -1,5 +1,7 @@
 @extends('layouts/adminForm')
 @section('pageTitle','Category Delete | Admin')
+@section('titleValue',$category->title)
+@section('descriptionValue',$category->description)
 @section('readonly','readonly')
 @section('buttonColor','danger')
 @section('buttonText','Delete')

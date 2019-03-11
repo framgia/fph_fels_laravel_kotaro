@@ -75,4 +75,19 @@ class AdminController extends Controller
         $newWord->save();
         return back();
     }
+
+    public function categoryAdd()
+    {
+        return view('/admin/categoryAdd');
+    }
+
+    public function categoryStore(Request $request)
+    {
+        $request->validate([
+            'title' => 'required | max:50',
+            'description' => 'required | max:5000',
+        ]);
+        (new Category)->fill($request->all())->create($request->all());
+        return $this->categoriesView(1);
+    }
 }
