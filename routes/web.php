@@ -37,6 +37,8 @@ Route::group(['middleware' => ['can:admin']], function () {
     Route::patch('/admin/category/{categoryId}/restore', 'AdminController@categoryRestore')->name('edit');
     Route::get('/admin/category/{categoryId}/destroy', 'AdminController@categoryDestroy')->name('destroy');
     Route::delete('/admin/category/{categoryId}/delete', 'AdminController@categoryDelete')->name('delete');
+    Route::get('/admin/add/word/{categoryId}', 'AdminController@addWord')->name('addword');
+    Route::post('/admin/add/word/{categoryId}/store', 'AdminController@addWordStore');
 });
 
 Route::get('/logout', 'Auth\LoginController@logout');

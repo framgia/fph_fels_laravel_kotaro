@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Word;
 use App\Category;
 use Illuminate\Http\Request;
 
@@ -40,5 +41,38 @@ class AdminController extends Controller
     {
         app(Category::class)::find($categoryId)->delete();
         return $this->categoriesView(1);
+    }
+
+    public function addWord($categoryId)
+    {
+        return view('/admin/addWord', compact('categoryId'));
+    }
+
+    public function addWordStore($categoryId, Request $request)
+    {
+        if (Category::find($categoryId) == null) {
+            return $this->categoriesView(1);
+        }
+        $request->validate([
+            'word' => 'required | max:50', 'answer' => 'required | in:choice1,choice2,choice3,choice4',
+            'choice1' => 'required | max:50', 'choice2' => 'required | max:50',
+            'choice3' => 'required | max:50', 'choice4' => 'required | max:50',
+        ]);
+        $n = 1;
+        $newWord = new Word;
+        $newWord->word = $request->word;
+        $newWord->category_id = $categoryId;
+        for ($i = 1; $i < 5; $i++) {
+            $choicei = 'choice' . $i;
+            $wrong_answer_n = "wrong_answer_" . $n;
+            if ($request->answer == $choicei) {
+                $newWord->answer = $request->$choicei;
+            } else {
+                $newWord->$wrong_answer_n = $request->$choicei;
+                $n++;
+            }
+        }
+        $newWord->save();
+        return back();
     }
 }
