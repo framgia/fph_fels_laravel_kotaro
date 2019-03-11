@@ -9,8 +9,8 @@ class UserController extends Controller
 {
     public function dashboardView()
     {
-        $learnedWordsNumber = auth()->user()->learnedWord->count();
-        $learnedLessonsNumber = auth()->user()->learnedLesson->count();
+        $learnedWordsNumber = Auth::user()->learnedWord->count();
+        $learnedLessonsNumber = Auth::user()->learnedLesson->count();
         return view('/user/dashboard', compact(
             'learnedWordsNumber',
             'learnedLessonsNumber'
