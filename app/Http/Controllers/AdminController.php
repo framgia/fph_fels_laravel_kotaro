@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use App\Word;
 use App\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
 {
@@ -96,5 +98,25 @@ class AdminController extends Controller
         $pageNumber < 0 ? $pageNumber = 1 : '';
         $users = app(User::class)->orderBy('updated_at', 'desc')->skip(10 * ($pageNumber - 1))->take(10)->get();
         return view('/admin/users', compact('users', 'pageNumber'));
+    }
+
+    public function userAddView()
+    {
+        return view('/admin/userAdd');
+    }
+
+    public function userStore(Request $request)
+    {
+        $request->validate([
+            'name' => 'required | min:3 | max:20',
+            'email' => 'required | email | unique',
+            'password' => 'required | min:6 | confirmed'
+        ]);
+        User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+        ]);
+        return redirect('/admin/users/1');
     }
 }
