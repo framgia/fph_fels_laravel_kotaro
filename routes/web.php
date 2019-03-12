@@ -41,6 +41,7 @@ Route::group(['middleware' => ['can:admin']], function () {
     Route::post('/admin/add/word/{categoryId}/store', 'AdminController@addWordStore');
     Route::get('/admin/add/category', 'AdminController@categoryAdd')->name('add');
     Route::post('/admin/add/category/store', 'AdminController@categoryStore');
+    Route::get('/admin/users/{pageNumber}', 'AdminController@usersView');
 });
 
 Route::get('/logout', 'Auth\LoginController@logout');

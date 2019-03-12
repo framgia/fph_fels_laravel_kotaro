@@ -90,4 +90,11 @@ class AdminController extends Controller
         (new Category)->fill($request->all())->create($request->all());
         return $this->categoriesView(1);
     }
+
+    public function usersView($pageNumber)
+    {
+        $pageNumber < 0 ? $pageNumber = 1 : '';
+        $users = app(User::class)->orderBy('updated_at', 'desc')->skip(10 * ($pageNumber - 1))->take(10)->get();
+        return view('/admin/users', compact('users', 'pageNumber'));
+    }
 }
