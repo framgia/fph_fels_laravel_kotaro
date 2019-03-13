@@ -109,7 +109,7 @@ class AdminController extends Controller
     {
         $request->validate([
             'name' => 'required | min:3 | max:20',
-            'email' => 'required | email | unique',
+            'email' => 'required | email | unique:users',
             'password' => 'required | min:6 | confirmed'
         ]);
         User::create([
@@ -117,6 +117,40 @@ class AdminController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
+        return redirect('/admin/users/1');
+    }
+
+    public function userExists($userId)
+    {
+        if (User::find($userId) == null) {
+            return abort(404);
+        }
+    }
+
+    public function userEdit($userId)
+    {
+        $this->userExists($userId);
+        $user = User::select('id', 'name', 'email')->find($userId);
+        return view('/admin/userEdit', compact('user'));
+    }
+
+    public function userRestore($userId, Request $request)
+    {
+        $this->userExists($userId);
+        if ($request->name !== User::find($userId)->name) {
+            $request->validate([
+                'name' => 'required | min:3 | max:20',
+            ]);
+        }
+        if ($request->email !== User::find($userId)->email) {
+            $request->validate([
+                'email' => 'required | email | unique:users',
+            ]);
+        }
+        User::find($userId)->fill([
+            'name' => $request->name,
+            'email' => $request->email
+        ])->save();
         return redirect('/admin/users/1');
     }
 }

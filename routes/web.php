@@ -44,6 +44,8 @@ Route::group(['middleware' => ['can:admin']], function () {
     Route::get('/admin/users/{pageNumber}', 'AdminController@usersView');
     Route::get('/admin/add/user', 'AdminController@userAddView')->name('users');
     Route::post('/admin/add/user/store', 'AdminController@userStore');
+    Route::get('/admin/user/{userId}/edit', 'AdminController@userEdit')->name('userEdit');
+    Route::patch('/admin/user/{userId}/edit/restore', 'AdminController@userRestore');
 });
 
 Route::get('/logout', 'Auth\LoginController@logout');
