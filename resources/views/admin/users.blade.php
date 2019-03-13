@@ -28,7 +28,7 @@
                         {{$user->email}}
                     </td>
                     <td style="min-width:200px;">
-                        <a href="/admin/user/{{$user->id}}/edit">Edit</a> | <a href="#">Delete</a>
+                        <a href="/admin/user/{{$user->id}}/edit">Edit</a> | <a href="/admin/user/{{$user->id}}/destroy">Delete</a>
                     </td>
                 </tr>
                 @endforeach

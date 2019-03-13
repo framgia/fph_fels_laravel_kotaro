@@ -153,4 +153,18 @@ class AdminController extends Controller
         ])->save();
         return redirect('/admin/users/1');
     }
+
+    public function userDestroy($userId)
+    {
+        $this->userExists($userId);
+        $user = User::select('id', 'name', 'email')->find($userId);
+        return view('/admin/userDelete', compact('user'));
+    }
+
+    public function userDelete($userId)
+    {
+        $this->userExists($userId);
+        User::find($userId)->delete();
+        return redirect('/admin/users/1');
+    }
 }

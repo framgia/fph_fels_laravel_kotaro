@@ -9,14 +9,14 @@
             @csrf
 
                 <label for="name">Name</label>
-                <input class="form-control {{$errors->has('name') ? 'is-invalid' : ''}}" type="text" name="name" value="@yield('nameValue',old('name'))" minlength="3" maxlength="20" placeholder="Mt.Fuji" required autofocus>
+                <input class="form-control {{$errors->has('name') ? 'is-invalid' : ''}}" type="text" name="name" value="@yield('nameValue',old('name'))" minlength="3" maxlength="20" placeholder="Mt.Fuji" required autofocus @yield('readonlyName','')>
                 @if($errors->has('name'))
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $errors->first('name') }}</strong>
                 </span>
                 @endif
                 <label class="mt-3" for="email">E-mail</label>
-                <input class="form-control {{$errors->has('email') ? 'is-invalid' : ''}}" type="mail" name="email" value="@yield('emailValue',old('email'))" placeholder="sushi@edo.com" required>
+                <input class="form-control {{$errors->has('email') ? 'is-invalid' : ''}}" type="mail" name="email" value="@yield('emailValue',old('email'))" placeholder="sushi@edo.com" required @yield('readonlyEmail','')>
                 @if($errors->has('email'))
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $errors->first('email') }}</strong>
