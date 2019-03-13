@@ -22,7 +22,7 @@
                     <a class="nav-link" href="/admin/users/1">Users</a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="#">#</a>
+                    <a class="nav-link" href="/admin/admins/1">Admins</a>
                 </li>
                 <li class="nav-item active">
                     <a class="nav-link" href="#">#</a>

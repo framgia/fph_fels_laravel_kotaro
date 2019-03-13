@@ -96,7 +96,7 @@ class AdminController extends Controller
     public function usersView($pageNumber)
     {
         $pageNumber < 0 ? $pageNumber = 1 : '';
-        $users = app(User::class)->orderBy('updated_at', 'desc')->skip(10 * ($pageNumber - 1))->take(10)->get();
+        $users = User::where('admin', false)->orderBy('updated_at', 'desc')->skip(10 * ($pageNumber - 1))->take(10)->get();
         return view('/admin/users', compact('users', 'pageNumber'));
     }
 
@@ -166,5 +166,11 @@ class AdminController extends Controller
         $this->userExists($userId);
         User::find($userId)->delete();
         return redirect('/admin/users/1');
+    }
+
+    public function adminsIndex($pageNumber)
+    {
+        $admins = User::where('admin', true)->orderBy('updated_at', 'desc')->skip(10 * ($pageNumber - 1))->take(10)->get();
+        return view('/admin/admins', compact('admins', 'pageNumber'));
     }
 }

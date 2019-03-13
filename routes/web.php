@@ -48,6 +48,7 @@ Route::group(['middleware' => ['can:admin']], function () {
     Route::patch('/admin/user/{userId}/edit/restore', 'AdminController@userRestore');
     Route::get('/admin/user/{userId}/destroy', 'AdminController@userDestroy')->name('userDestroy');
     Route::delete('/admin/user/{userId}/destroy/delete', 'AdminController@userDelete');
+    Route::get('/admin/admins/{pageNumber}', 'AdminController@adminsIndex')->name('admins');
 });
 
 Route::get('/logout', 'Auth\LoginController@logout');
