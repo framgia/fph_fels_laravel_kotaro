@@ -173,4 +173,17 @@ class AdminController extends Controller
         $admins = User::where('admin', true)->orderBy('updated_at', 'desc')->skip(10 * ($pageNumber - 1))->take(10)->get();
         return view('/admin/admins', compact('admins', 'pageNumber'));
     }
+
+    public function adminStore(Request $request)
+    {
+        $request->validate([
+            'name' => 'required | min:3 | max:20', 'email' => 'required | email | unique:users',
+            'password' => 'required | min:6 | confirmed'
+        ]);
+        User::create([
+            'name' => $request->name, 'email' => $request->email,
+            'password' => Hash::make($request->password), 'admin' => true
+        ]);
+        return redirect('/admin/admins/1');
+    }
 }
