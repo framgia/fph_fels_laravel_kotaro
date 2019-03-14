@@ -36,9 +36,9 @@ class User extends Authenticatable
         return $this->hasMany(LearnedWord::class);
     }
 
-    public function learnedLesson()
+    public function lesson()
     {
-        return $this->hasMany(LearnedLesson::class);
+        return $this->hasMany(Lesson::class);
     }
 
     public function relationship()

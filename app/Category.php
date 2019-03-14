@@ -10,9 +10,9 @@ class Category extends Model
     protected $fillable = [
         'title',
     ];
-    public function learnedLesson()
+    public function Lesson()
     {
-        return $this->hasMany(learnedLesson::class);
+        return $this->hasMany(Lesson::class);
     }
 
     public function word()

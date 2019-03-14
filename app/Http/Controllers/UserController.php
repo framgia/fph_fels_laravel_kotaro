@@ -12,7 +12,7 @@ class UserController extends Controller
     public function dashboardView()
     {
         $learnedWordsNumber = Auth::user()->learnedWord->count();
-        $learnedLessonsNumber = Auth::user()->learnedLesson->count();
+        $learnedLessonsNumber = Auth::user()->lesson->count();
 
         $activities = collect();
 
@@ -34,24 +34,24 @@ class UserController extends Controller
             }
         }
 
-        $learnedLessons = Auth::user()->learnedLesson;
-        foreach ($learnedLessons as $learnedLesson) {
-            $learnedCategory = Category::find($learnedLesson->category_id);
+        $lessons = Auth::user()->lesson;
+        foreach ($lessons as $lesson) {
+            $learnedCategory = Category::find($lesson->category_id);
             $activities[] = collect([
                 'message' => 'You learned <a href="/Category/' . $learnedCategory->id . '">' . $learnedCategory->title . '</a>.',
                 'avatar_url' => Auth::user()->avatar_url,
-                'updated_at' => $learnedLesson->updated_at
+                'updated_at' => $lesson->updated_at
             ]);
         }
 
         foreach ($followingUsersId as $followingUserId) {
             $followingUser = User::find($followingUserId->following_id);
-            foreach ($followingUser->learnedLesson as $learnedLesson) {
-                $followingUserCategory = Category::find($learnedLesson->category_id);
+            foreach ($followingUser->lesson as $lesson) {
+                $followingUserCategory = Category::find($lesson->category_id);
                 $activities[] = collect([
-                    'message' => '<a href="/profile/' . $followingUser->id . '">' . $followingUser->name . '</a> learned ' . $learnedLesson->progress_number . ' words of ' . $followingUserCategory->word->count() . ' in <a href="/category/' . $followingUserCategory->id . '">' . $followingUserCategory->title . '</a>',
+                    'message' => '<a href="/profile/' . $followingUser->id . '">' . $followingUser->name . '</a> learned ' . $lesson->progress_number . ' words of ' . $followingUserCategory->word->count() . ' in <a href="/category/' . $followingUserCategory->id . '">' . $followingUserCategory->title . '</a>',
                     'avatar_url' => $followingUser->avatar_url,
-                    'updated_at' => $learnedLesson->updated_at
+                    'updated_at' => $lesson->updated_at
                 ]);
             }
         }

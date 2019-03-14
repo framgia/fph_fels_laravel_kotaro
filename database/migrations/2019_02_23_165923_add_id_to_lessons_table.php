@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddIdToLearnedLessonsTable extends Migration
+class AddIdToLessonsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class AddIdToLearnedLessonsTable extends Migration
      */
     public function up()
     {
-        Schema::table('learned_lessons', function (Blueprint $table) {
+        Schema::table('lessons', function (Blueprint $table) {
             $table->increments('id');
         });
     }
@@ -25,7 +25,7 @@ class AddIdToLearnedLessonsTable extends Migration
      */
     public function down()
     {
-        Schema::table('learned_lessons', function (Blueprint $table) {
+        Schema::table('lessons', function (Blueprint $table) {
             //
         });
     }
