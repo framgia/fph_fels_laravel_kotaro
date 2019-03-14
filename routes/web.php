@@ -55,6 +55,8 @@ Route::group(['middleware' => ['can:admin']], function () {
     Route::post('/admin/add/admin/store', 'AdminController@adminStore');
     Route::get('/admin/admin/{adminId}/edit', 'AdminController@adminEdit')->name('adminEdit');
     Route::patch('/admin/admin/{adminId}/edit/restore', 'AdminController@adminRestore');
+    Route::get('/admin/admin/{adminId}/destroy', 'AdminController@adminDestroy')->name('adminDestroy');
+    Route::delete('/admin/admin/{adminId}/destroy/delete', 'AdminController@adminDelete');
 });
 
 Route::get('/logout', 'Auth\LoginController@logout');

@@ -170,10 +170,19 @@ class AdminController extends Controller
         return view('/admin/userDelete', compact('user'));
     }
 
+    public function accountDelete($accountId)
+    {
+        $this->userExists($accountId);
+        User::find($accountId)->delete();
+    }
+
     public function userDelete($userId)
     {
-        $this->userExists($userId);
-        User::find($userId)->delete();
+        try {
+            $this->accountDelete($userId);
+        } catch (Exception $e) {
+            return back();
+        }
         return redirect('/admin/users/1');
     }
 
@@ -208,6 +217,23 @@ class AdminController extends Controller
         try {
             $this->accountRestore($adminId, $request);
         } catch (Exeption $e) {
+            return back();
+        }
+        return redirect('/admin/admins/1');
+    }
+
+    public function adminDestroy($adminId)
+    {
+        $this->userExists($adminId);
+        $admin = User::select('id', 'name', 'email')->find($adminId);
+        return view('/admin/adminDelete', compact('admin'));
+    }
+
+    public function adminDelete($adminId)
+    {
+        try {
+            $this->accountDelete($adminId);
+        } catch (Exception $e) {
             return back();
         }
         return redirect('/admin/admins/1');
