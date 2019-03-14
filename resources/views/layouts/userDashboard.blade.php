@@ -45,10 +45,10 @@
                             <span class="lead mx-auto"><strong>{{auth()->user()->name}}</strong></span>
                         </div>
                         <div class="mb-lg-2">
-                            <a href="#">Learned {{$learnedWordsNumber}} words</a>
+                            <a href="#">Learned {{auth()->user()->learnedWord->count()}} words</a>
                         </div>
                         <div class="mb-lg-2">
-                            <a href="#">Learned {{$learnedLessonsNumber}} lessons</a>
+                            <a href="#">Learned {{auth()->user()->lesson->count()}} lessons</a>
                         </div>
                     </div>
                 </div>

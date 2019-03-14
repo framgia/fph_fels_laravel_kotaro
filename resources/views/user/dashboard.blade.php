@@ -16,12 +16,12 @@
             <div class="row">
                 @foreach($activities as $activity)
                 <div class="col-2 m-2">
-                    <img src="{{asset('storage/'.$activity['avatar_url'])}}" alt="" class="img-fluid rounded-circle m-3">
+                    <img src="{{asset('storage/'.$activity->user->avatar_url)}}" alt="" class="img-fluid rounded-circle m-3">
                 </div>
                 <div class="col-8 m-2">
                     <div class="my-3">
-                        {!!$activity['message']!!}<br>
-                        {{$activity['updated_at']->diffForHumans()}}
+                        {!!$activity->action_type!!}<br>
+                        {{$activity->updated_at->diffForHumans()}}
                     </div>
                 </div>
                 @endforeach
