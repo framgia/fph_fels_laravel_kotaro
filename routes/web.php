@@ -53,6 +53,8 @@ Route::group(['middleware' => ['can:admin']], function () {
         return view('/admin/adminAdd');
     })->name('adminAdd');
     Route::post('/admin/add/admin/store', 'AdminController@adminStore');
+    Route::get('/admin/admin/{adminId}/edit', 'AdminController@adminEdit')->name('adminEdit');
+    Route::patch('/admin/admin/{adminId}/edit/restore', 'AdminController@adminRestore');
 });
 
 Route::get('/logout', 'Auth\LoginController@logout');

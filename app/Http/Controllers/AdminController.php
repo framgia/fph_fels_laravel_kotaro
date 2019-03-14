@@ -134,7 +134,7 @@ class AdminController extends Controller
         return view('/admin/userEdit', compact('user'));
     }
 
-    public function userRestore($userId, Request $request)
+    public function accountRestore($userId, $request)
     {
         $this->userExists($userId);
         if ($request->name !== User::find($userId)->name) {
@@ -151,6 +151,15 @@ class AdminController extends Controller
             'name' => $request->name,
             'email' => $request->email
         ])->save();
+    }
+
+    public function userRestore($userId, Request $request)
+    {
+        try {
+            $this->accountRestore($userId, $request);
+        } catch (Exeption $e) {
+            return back();
+        }
         return redirect('/admin/users/1');
     }
 
@@ -184,6 +193,23 @@ class AdminController extends Controller
             'name' => $request->name, 'email' => $request->email,
             'password' => Hash::make($request->password), 'admin' => true
         ]);
+        return redirect('/admin/admins/1');
+    }
+
+    public function adminEdit($adminId)
+    {
+        $this->userExists($adminId);
+        $admin = User::select('id', 'name', 'email')->find($adminId);
+        return view('/admin/adminEdit', compact('admin'));
+    }
+
+    public function adminRestore($adminId, Request $request)
+    {
+        try {
+            $this->accountRestore($adminId, $request);
+        } catch (Exeption $e) {
+            return back();
+        }
         return redirect('/admin/admins/1');
     }
 }
