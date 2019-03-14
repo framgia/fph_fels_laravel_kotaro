@@ -2,7 +2,7 @@
 @section('pagetitle','Admin list | Admin')
 @section('body')
 <div class="container">
-    <a href="#"><button class="mt-4 btn btn-warning form-control">Create new Admin</button></a>
+    <a href="/admin/add/admin"><button class="mt-4 btn btn-warning form-control">Create new Admin</button></a>
     <div class="mt-4">
         <table class="table table-hover">
             <thead class="table-primary">
