@@ -19,4 +19,9 @@ class Lesson extends Model
     {
         return $this->belongsTo(Category::class);
     }
+
+    public function activity()
+    {
+        return $this->morphMany('App\Activity', 'action');
+    }
 }

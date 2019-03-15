@@ -15,4 +15,9 @@ class Relationship extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function activity()
+    {
+        return $this->morphMany('App\Activity', 'action');
+    }
 }

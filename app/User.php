@@ -41,11 +41,6 @@ class User extends Authenticatable
         return $this->hasMany(Lesson::class);
     }
 
-    public function activity()
-    {
-        return $this->hasMany(Activity::class);
-    }
-
     public function relationship()
     {
         return $this->hasMany(Relationship::class);
@@ -54,5 +49,10 @@ class User extends Authenticatable
     public function relationshipOrderByUpdatedAtDesc()
     {
         return $this->hasMany(Relationship::class)->orderBy('updated_at', 'desc');
+    }
+
+    public function activity()
+    {
+        return $this->hasMany(Activity::class);
     }
 }
