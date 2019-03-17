@@ -36,8 +36,23 @@ class User extends Authenticatable
         return $this->hasMany(LearnedWord::class);
     }
 
-    public function learnedLesson()
+    public function lesson()
     {
-        return $this->hasMany(LearnedLesson::class);
+        return $this->hasMany(Lesson::class);
+    }
+
+    public function relationship()
+    {
+        return $this->hasMany(Relationship::class);
+    }
+
+    public function relationshipOrderByUpdatedAtDesc()
+    {
+        return $this->hasMany(Relationship::class)->orderBy('updated_at', 'desc');
+    }
+
+    public function activity()
+    {
+        return $this->hasMany(Activity::class);
     }
 }
