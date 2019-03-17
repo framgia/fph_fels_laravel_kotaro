@@ -29,6 +29,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/categories/{pageNumber}', 'UserController@categoriesView');
     Route::get('/category/{categoryId}', 'UserController@lessonView');
     Route::post('/answer/{wordId}', 'UserController@answerCheck');
+    Route::get('/userlist/{pageNumber}', 'UserController@userlistView');
 });
 
 Route::group(['middleware' => ['can:admin']], function () {

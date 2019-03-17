@@ -30,6 +30,9 @@
                 <li class="nav-item active">
                     <a class="nav-link" href="/categories/1">Categories</a>
                 </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="/userlist/1">User List</a>
+                </li>
             </ul>
             <span class="navbar-text">
                 <a class="nav-link" href="logout">Logout</a>
@@ -37,6 +40,7 @@
         </div>
     </nav>
     @yield('body')
+    @yield('pagenation')
 </body>
 
 </html> 

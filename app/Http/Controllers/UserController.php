@@ -202,4 +202,10 @@ class UserController extends Controller
 
         return view('/user/result', compact('words', 'category', 'count'));
     }
+
+    public function userlistView($pageNumber)
+    {
+        $users = User::orderBy('updated_at')->skip(10 * ($pageNumber - 1))->take(10)->get();
+        return view('/user/userlist', compact('users', 'pageNumber'));
+    }
 }
