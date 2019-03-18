@@ -5,7 +5,7 @@
     <div class="row">
         @foreach($users as $user)
         <div class="col-6 p-3">
-            <a href="#">
+            <a href="/profile/{{$user->id}}">
                 <div class="row border p-4 mx-2 shadow">
                     <div class="col-8 align-center">
                         {{$user->name}}

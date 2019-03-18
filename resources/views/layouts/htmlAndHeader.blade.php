@@ -8,6 +8,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="{{asset('css/app.css')}}">
     <script src="main.js"></script>
+    <style>
+        @yield('style')
+    </style>
 </head>
 
 <body>
@@ -32,6 +35,9 @@
                 </li>
                 <li class="nav-item active">
                     <a class="nav-link" href="/userlist/1">User List</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="/settings">Settings</a>
                 </li>
             </ul>
             <span class="navbar-text">

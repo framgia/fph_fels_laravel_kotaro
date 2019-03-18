@@ -30,6 +30,10 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/category/{categoryId}', 'UserController@lessonView');
     Route::post('/answer/{wordId}', 'UserController@answerCheck');
     Route::get('/userlist/{pageNumber}', 'UserController@userlistView');
+    Route::get('/settings', 'UserController@settingsView');
+    Route::patch('/settings/profile/restore', 'UserController@settingsProfileRestore');
+    Route::patch('/settings/password/restore', 'UserController@settingsPasswordRestore');
+    Route::patch('/settings/avatar/restore', 'UserController@settingsAvatarRestore');
 });
 
 Route::group(['middleware' => ['can:admin']], function () {

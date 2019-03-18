@@ -147,7 +147,7 @@ class AdminController extends Controller
                 'email' => 'required | email | unique:users',
             ]);
         }
-        User::find($userId)->fill([
+        return User::find($userId)->fill([
             'name' => $request->name,
             'email' => $request->email
         ])->save();

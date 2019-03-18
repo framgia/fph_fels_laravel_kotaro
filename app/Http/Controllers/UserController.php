@@ -10,6 +10,10 @@ use App\LearnedWord;
 use App\LearnedLesson;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
+use App\Http\Controllers\AdminController as Admin;
 
 class UserController extends Controller
 {
@@ -207,5 +211,67 @@ class UserController extends Controller
     {
         $users = User::orderBy('updated_at')->skip(10 * ($pageNumber - 1))->take(10)->get();
         return view('/user/userlist', compact('users', 'pageNumber'));
+    }
+
+    public function settingsView()
+    {
+        $user = Auth::user();
+        return view('/user/settings', compact('user'));
+    }
+
+    public function settingsProfileRestore(Request $request)
+    {
+        if ((new Admin)->accountRestore(Auth::user()->id, $request)) {
+            return redirect()
+                ->back()
+                ->with('message', 'Profile was changed!')->with('color', 'success');
+        } else {
+            return redirect()
+                ->back()
+                ->with('message', 'Profile was not changed!')->with('color', 'danger');
+        }
+        return back();
+    }
+
+    public function settingsPasswordRestore(Request $request)
+    {
+        $request->validate([
+            'newPassword' => 'required | min:6 | confirmed'
+        ]);
+        if (Hash::check($request->currentPassword, Auth::user()->password)) {
+            User::find(Auth::user()->id)->fill([
+                'password' => Hash::make($request->newPassword)
+            ])->save();
+            return redirect()
+                ->back()
+                ->with('message', 'Password was changed!')
+                ->with('color', 'success');
+        } else {
+            return redirect()
+                ->back()
+                ->with('message', 'Password is wrong!')
+                ->with('color', 'danger');
+        }
+        return back();
+    }
+
+    public function settingsAvatarRestore(Request $request)
+    {
+        $request->validate([
+            'avatar' => 'required | file | image | mimes:jpeg,png',
+        ]);
+        if ($request->file('avatar')->isValid()) {
+            $filename = Auth::user()->id . "-" . time() . '.jpg';
+            $request->avatar->storeAs('public', $filename);
+            Storage::disk('public')->delete(Auth::user()->avatar_url);
+            User::find(Auth::id())->fill(['avatar_url' => $filename])->save();
+            return back()
+                ->with('message', 'Avatar image was updated!')
+                ->with('color', 'success');
+        } else {
+            return back()
+                ->with('message', 'Avatar image was not updaated!')
+                ->with('color', 'danger');
+        }
     }
 }
